@@ -11,7 +11,7 @@ class Tile:
     __metaclass__ = abc.ABCMeta
 
     BLANK = English_letter_distribution.BLANK
-    _letter_distribution = English_letter_distribution.distribution
+    _letter_distribution = English_letter_distribution.letters
 
     def __init__(self, letter, blank=False):
         self.__blank = blank
@@ -49,8 +49,12 @@ class Tile:
         return self._letter_distribution[self.letter]
 
     @classmethod
+    def get_letter_distribution(cls):
+        return cls._letter_distribution
+
+    @classmethod
     def set_letter_distribution(cls, distribution):
         if not isinstance(distribution, LetterDistribution):
             raise TypeError("distribution has to be a LetterDistribution")
         cls.BLANK = distribution.BLANK
-        cls._letter_distribution = distribution.distribution
+        cls._letter_distribution = distribution.letters

@@ -1,6 +1,7 @@
 import unittest
 from tiles import LetterError
 from tiles import Tile
+from distributions import English_letter_distribution
 
 
 class TestTile(unittest.TestCase):
@@ -56,6 +57,8 @@ class TestTile(unittest.TestCase):
         self.assertEqual(bt.letter, Tile.BLANK)
         self.assertEqual(bt.value, 0)
 
+    def test_get_letter_distribution(self):
+        self.assertEqual(Tile.get_letter_distribution(), English_letter_distribution.letters)
 
 if __name__ == "__main__":
     unittest.main()

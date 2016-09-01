@@ -1,18 +1,21 @@
 import abc
+from distributions import LetterDistribution, English_letter_distribution
 
 
 class LetterError(TypeError):
     pass
 
 
-class AbstractTile:
+class Tile:
     """Interface class for Tiles. Specific Tiles (differ in language, letter distribution, etc.) inherit from it"""
     __metaclass__ = abc.ABCMeta
 
-    BLANK = None
+    BLANK = English_letter_distribution.BLANK
+    _letter_distribution = English_letter_distribution.distribution
 
     def __init__(self, letter, blank=False):
         self.__blank = blank
+        self.__letter = letter  # Not required, but here to follow PEP
         self.letter = letter
 
     @classmethod
@@ -33,8 +36,8 @@ class AbstractTile:
 
     @letter.setter
     def letter(self, letter):
-        if letter not in self.letter_distribution():
-            if letter.upper() in self.letter_distribution():
+        if letter not in self._letter_distribution:
+            if letter.upper() in self._letter_distribution:
                 raise LetterError(str(letter) + "is in lowercase - 'letter_distribution' is generally only uppercase")
             raise LetterError(str(letter) + "is not a valid letter")
         self.__letter = letter
@@ -42,40 +45,12 @@ class AbstractTile:
     @property
     def value(self):
         if self.isblank():  # If tile is blank value is given by BLANK in letter_distribution, not by the current letter
-            return self.letter_distribution()[self.BLANK]
-        return self.letter_distribution()[self.letter]
+            return self._letter_distribution[self.BLANK]
+        return self._letter_distribution[self.letter]
 
-    @abc.abstractclassmethod
-    def letter_distribution(cls):
-        """Should return a dictionary of letter: value for all available letters of the given language. None is blank"""
-
-
-class EnglishTile(AbstractTile):
-    """Classic English alphabet and letter values"""
     @classmethod
-    def letter_distribution(cls):
-        return {cls.BLANK: 0,
-                'A': 1,
-                'B': 3,
-                'C': 3,
-                'D': 2,
-                'E': 1,
-                'F': 4,
-                'G': 2,
-                'H': 4,
-                'I': 1,
-                'J': 8,
-                'M': 3,
-                'N': 1,
-                'O': 1,
-                'P': 3,
-                'Q': 10,
-                'R': 1,
-                'S': 1,
-                'T': 1,
-                'U': 1,
-                'V': 4,
-                'W': 4,
-                'X': 8,
-                'Y': 4,
-                'Z': 10}
+    def set_letter_distribution(cls, distribution):
+        if not isinstance(distribution, LetterDistribution):
+            raise TypeError("distribution has to be a LetterDistribution")
+        cls.BLANK = distribution.BLANK
+        cls._letter_distribution = distribution.distribution

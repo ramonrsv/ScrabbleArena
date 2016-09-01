@@ -1,12 +1,12 @@
 import unittest
 from tiles import LetterError
-from tiles import EnglishTile
+from tiles import Tile
 
 
-class TestEnglishTile(unittest.TestCase):
+class TestTile(unittest.TestCase):
     def test_simple_construction(self):
-        ta = EnglishTile('A')
-        tz = EnglishTile('Z')
+        ta = Tile('A')
+        tz = Tile('Z')
         self.assertEqual(ta.letter, 'A')
         self.assertEqual(tz.letter, 'Z')
         self.assertEqual(ta.value, 1)
@@ -15,7 +15,7 @@ class TestEnglishTile(unittest.TestCase):
         self.assertFalse(tz.isblank())
 
     def test_simple_letter_reassignment(self):
-        t = EnglishTile('A')
+        t = Tile('A')
         self.assertEqual(t.letter, 'A')
         self.assertEqual(t.value, 1)
         t.letter = 'B'
@@ -23,27 +23,27 @@ class TestEnglishTile(unittest.TestCase):
         self.assertEqual(t.value, 3)
 
     def test_bad_construction(self):
-        self.assertRaises(LetterError, lambda: EnglishTile('\n'))
+        self.assertRaises(LetterError, lambda: Tile('\n'))
 
     def test_bad_reassignment(self):
-        ta = EnglishTile('A')
+        ta = Tile('A')
         with self.assertRaises(LetterError):
             ta.letter = '\n'
 
     def test_blank_tile_default_letter(self):
-        bt = EnglishTile.blank_tile()
+        bt = Tile.blank_tile()
         self.assertTrue(bt.isblank())
-        self.assertEqual(bt.letter, EnglishTile.BLANK)
+        self.assertEqual(bt.letter, Tile.BLANK)
         self.assertEqual(bt.value, 0)
 
     def test_blank_tile_other_letter(self):
-        bt = EnglishTile.blank_tile('A')
+        bt = Tile.blank_tile('A')
         self.assertTrue(bt.isblank())
         self.assertEqual(bt.letter, 'A')
         self.assertEqual(bt.value, 0)
 
     def test_blank_tile_letter_change(self):
-        bt = EnglishTile.blank_tile('A')
+        bt = Tile.blank_tile('A')
         self.assertTrue(bt.isblank())
         self.assertEqual(bt.letter, 'A')
         self.assertEqual(bt.value, 0)
@@ -51,9 +51,9 @@ class TestEnglishTile(unittest.TestCase):
         self.assertTrue(bt.isblank())
         self.assertEqual(bt.letter, 'B')
         self.assertEqual(bt.value, 0)
-        bt.letter = EnglishTile.BLANK
+        bt.letter = Tile.BLANK
         self.assertTrue(bt.isblank())
-        self.assertEqual(bt.letter, EnglishTile.BLANK)
+        self.assertEqual(bt.letter, Tile.BLANK)
         self.assertEqual(bt.value, 0)
 
 

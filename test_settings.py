@@ -1,12 +1,12 @@
 import unittest
-from distributions import English_letter_distribution, English_classic_100_tile_distribution
+from settings import English_classic_letter_distribution, English_classic_100_tile_distribution
 import string
 
 
 class TestDistributions(unittest.TestCase):
     def test_letters_are_alphabet(self):
-        no_blank_letters = [letter for letter in English_letter_distribution.letters.keys()
-                            if letter is not English_letter_distribution.BLANK]
+        no_blank_letters = [letter for letter in English_classic_letter_distribution.letters.keys()
+                            if letter is not English_classic_letter_distribution.BLANK]
         self.assertEqual(set(no_blank_letters), set(list(string.ascii_uppercase)))
 
     def test_total_tiles(self):

@@ -1,10 +1,12 @@
 import unittest
-from tiles import LetterError
-from tiles import Tile
-from distributions import English_letter_distribution
+from tile import LetterError, Tile
+from settings import English_classic_letter_distribution
 
 
 class TestTile(unittest.TestCase):
+    def setUp(self):
+        Tile.set_letter_distribution(English_classic_letter_distribution)
+
     def test_simple_construction(self):
         ta = Tile('A')
         tz = Tile('Z')
@@ -58,7 +60,7 @@ class TestTile(unittest.TestCase):
         self.assertEqual(bt.value, 0)
 
     def test_get_letter_distribution(self):
-        self.assertEqual(Tile.get_letter_distribution(), English_letter_distribution.letters)
+        self.assertEqual(Tile.get_letter_distribution(), English_classic_letter_distribution.letters)
 
 if __name__ == "__main__":
     unittest.main()

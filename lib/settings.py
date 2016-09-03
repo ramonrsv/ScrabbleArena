@@ -1,4 +1,4 @@
-from tile import LetterDistribution, TileDistribution
+from .tile import LetterDistribution, TileDistribution
 
 
 English_classic_letter_distribution = LetterDistribution(

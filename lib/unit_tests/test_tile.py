@@ -1,6 +1,6 @@
 import unittest
-from tile import LetterError, Tile
-from settings import English_classic_letter_distribution
+from ..tile import LetterError, Tile
+from ..settings import English_classic_letter_distribution
 
 
 class TestTile(unittest.TestCase):

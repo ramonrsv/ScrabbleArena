@@ -1,4 +1,4 @@
-from board_position import Position
+from .board_position import Position
 
 
 class BoardConfiguration:

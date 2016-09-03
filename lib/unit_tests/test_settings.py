@@ -1,5 +1,5 @@
 import unittest
-from settings import English_classic_letter_distribution, English_classic_100_tile_distribution
+from ..settings import English_classic_letter_distribution, English_classic_100_tile_distribution
 import string
 
 

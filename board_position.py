@@ -41,6 +41,12 @@ class Position:
         self.y = y
         self.property = pos_property
 
+    def __eq__(self, other):
+        return bool(self.x == other.x and self.y == other.y and self.property == other.property)
+
+    def __lt__(self, other):
+        return (self.x, self.y, self.property) < (other.x, other.y, other.property)
+
     @staticmethod
     def coo_to_alpha(coo):
         if not isinstance(coo, int) or coo <= 0:

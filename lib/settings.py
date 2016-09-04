@@ -1,6 +1,6 @@
 from .tile import LetterDistribution, TileDistribution
 from .position import PosProperty, Position
-from .board_configuration import BoardConfiguration
+from .board import BoardConfiguration
 
 
 English_classic_letter_distribution = LetterDistribution(

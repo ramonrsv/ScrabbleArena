@@ -5,30 +5,6 @@ class LetterError(TypeError):
     pass
 
 
-class LetterDistribution:
-    """Contains a map of all Letters and their respective values"""
-    def __init__(self, blank, distribution):
-        self.BLANK = blank
-        self.letters = distribution
-        if not isinstance(distribution, dict):
-            raise TypeError("distribution has to be a dictionary")
-        if self.BLANK not in distribution:
-            raise ValueError("BLANK has to be in distribution")
-
-
-class TileDistribution:
-    """Contains a map of all Letters in a LetterDistribution with their respective frequency"""
-    def __init__(self, letter_distribution, tile_distribution):
-        if not isinstance(letter_distribution, LetterDistribution):
-            raise TypeError("letter_distribution has to be a LetterDistribution")
-        if not isinstance(tile_distribution, dict):
-            raise TypeError("tile_distribution has to be a dictionary")
-        if set(letter_distribution.letters.keys()) != set(tile_distribution.keys()):
-            raise ValueError("tile_distribution has to have an entry for every letter in letter_distribution")
-        self.BLANK = letter_distribution.BLANK
-        self.tiles = tile_distribution
-
-
 class Tile:
     """Interface class for Tiles. Specific Tiles (differ in language, letter distribution, etc.) inherit from it"""
     __metaclass__ = abc.ABCMeta
@@ -82,3 +58,27 @@ class Tile:
             raise TypeError("distribution has to be a LetterDistribution")
         cls.BLANK = distribution.BLANK
         cls._letter_distribution = distribution.letters
+
+
+class LetterDistribution:
+    """Contains a map of all Letters and their respective values"""
+    def __init__(self, blank, distribution):
+        self.BLANK = blank
+        self.letters = distribution
+        if not isinstance(distribution, dict):
+            raise TypeError("distribution has to be a dictionary")
+        if self.BLANK not in distribution:
+            raise ValueError("BLANK has to be in distribution")
+
+
+class TileDistribution:
+    """Contains a map of all Letters in a LetterDistribution with their respective frequency"""
+    def __init__(self, letter_distribution, tile_distribution):
+        if not isinstance(letter_distribution, LetterDistribution):
+            raise TypeError("letter_distribution has to be a LetterDistribution")
+        if not isinstance(tile_distribution, dict):
+            raise TypeError("tile_distribution has to be a dictionary")
+        if set(letter_distribution.letters.keys()) != set(tile_distribution.keys()):
+            raise ValueError("tile_distribution has to have an entry for every letter in letter_distribution")
+        self.BLANK = letter_distribution.BLANK
+        self.tiles = tile_distribution

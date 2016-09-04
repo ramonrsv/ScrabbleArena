@@ -10,6 +10,16 @@ path = os.path.dirname(sys.modules[__name__].__file__)
 path = os.path.join(path, '..')
 sys.path.insert(0, path)
 
+all_unit_test_scripts = ['test_board_configuration',
+                         'test_board_container',
+                         'test_dimension_coordinate_properties',
+                         'test_position',
+                         'test_settings',
+                         'test_tile']
+
+if not params or params[0] in ['all', 'All', 'ALL']:
+    params = all_unit_test_scripts
+
 for param in params:
     try:
         print("Running " + param)

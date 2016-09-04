@@ -1,4 +1,4 @@
-from .board_position import Position
+from .position import Position
 from .dimension_coordinate_properties import DimensionProperty
 
 

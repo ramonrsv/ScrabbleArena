@@ -1,5 +1,5 @@
 import unittest
-from ..board_position import PosProperty, Position
+from ..position import PosProperty, Position
 
 
 class TestPosProperty(unittest.TestCase):

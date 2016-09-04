@@ -1,5 +1,5 @@
 import unittest
-from ..board_position import PosProperty, Position
+from ..position import PosProperty, Position
 from ..board_configuration import BoardConfiguration
 
 

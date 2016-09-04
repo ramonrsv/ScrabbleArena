@@ -75,3 +75,12 @@ Words_with_friends_board_configuration = BoardConfiguration.from_corners_symmetr
     Position(1, 7, PosProperty.L3), Position(5, 7, PosProperty.L2),
     Position(4, 8, PosProperty.W2), Position(8, 8, PosProperty.CENTER)
 ])
+
+Words_with_friends_fast_play_board_configuration = BoardConfiguration.from_corners_symmetry(11, 11, [
+    Position('A', 1, PosProperty.L3), Position('C', 1, PosProperty.W3),
+    Position('B', 2, PosProperty.W2), Position('F', 2, PosProperty.W2),
+    Position('A', 3, PosProperty.W3), Position('C', 3, PosProperty.L2), Position('E', 3, PosProperty.L2),
+    Position('D', 4, PosProperty.L3),
+    Position('C', 5, PosProperty.L2),
+    Position('B', 5, PosProperty.W2)
+])

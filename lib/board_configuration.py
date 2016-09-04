@@ -31,15 +31,6 @@ class BoardConfiguration(DimensionProperty):
         self.special_positions = special_positions
 
     @staticmethod
-    def center_coo(width, height):
-        return (None if width % 2 == 0 else width // 2 + 1), (None if height % 2 == 0 else height // 2 + 1)
-
-    @staticmethod
-    def in_bounds(pos, bounds):
-        """Takes position and bounds in {x:(1,2), y:(1,2)} form"""
-        return bounds['x'][0] <= pos.x <= bounds['x'][1] and bounds['y'][0] <= pos.y <= bounds['y'][1]
-
-    @staticmethod
     def _quadrant_bounds(width, height, inclusive=False):
         """Return map of map of coordinate pair tuples for the bounds of all 4 quadrants in order.
         If inclusive and odd width/height, the center x/y coordinate is included in both ranges.
@@ -61,7 +52,7 @@ class BoardConfiguration(DimensionProperty):
     def _find_quadrant(pos, width, height):
         quadrant_bounds = BoardConfiguration._quadrant_bounds(width, height)
         for key, value in quadrant_bounds.items():
-            if BoardConfiguration.in_bounds(pos, value):
+            if BoardConfiguration.in_bounds(pos.coo, value):
                 return key
         return None
 
@@ -85,7 +76,7 @@ class BoardConfiguration(DimensionProperty):
         if quadrant:  # if not quadrant all special positions are in odd column/rows
             quadrant_bounds = cls._quadrant_bounds(width, height, inclusive=True)[quadrant]
             for pos in special_positions:
-                if not cls.in_bounds(pos, quadrant_bounds):
+                if not cls.in_bounds(pos.coo, quadrant_bounds):
                     raise ValueError("invalid position: " + str(pos.coo) + " - all positions must be in one corner")
 
         # _mirror_position return None if it can't be mirrored, ensure it is not appended to the list

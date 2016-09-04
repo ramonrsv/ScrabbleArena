@@ -30,6 +30,15 @@ class DimensionProperty:
     def height(self, h):
         self.__height = self._dimension_check(h)
 
+    @staticmethod
+    def center_coo(width, height):
+        return (None if width % 2 == 0 else width // 2 + 1), (None if height % 2 == 0 else height // 2 + 1)
+
+    @staticmethod
+    def in_bounds(pos, bounds):
+        """Takes position in (x,y) and bounds in {x:(1,2), y:(1,2)} form"""
+        return bounds['x'][0] <= pos[0] <= bounds['x'][1] and bounds['y'][0] <= pos[1] <= bounds['y'][1]
+
 
 class CoordinateProperty:
     def __init__(self, x, y):

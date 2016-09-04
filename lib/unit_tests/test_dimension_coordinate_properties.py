@@ -78,6 +78,15 @@ class TestDimensionProperty(unittest.TestCase):
         with self.assertRaises(TypeError):
             bc.width = -1
 
+    def test_center_coo(self):
+        self.assertEqual(DimensionProperty.center_coo(15, 15), (8, 8))
+        self.assertEqual(DimensionProperty.center_coo(10, 10), (None, None))
+        self.assertEqual(DimensionProperty.center_coo(15, 10), (8, None))
+
+    def test_in_bounds(self):
+        self.assertTrue(DimensionProperty.in_bounds((1, 2), {'x': (1, 4), 'y': (1, 4)}))
+        self.assertFalse(DimensionProperty.in_bounds((4, 6), {'x': (1, 4), 'y': (1, 4)}))
+        self.assertTrue(DimensionProperty.in_bounds((4, 4), {'x': (1, 4), 'y': (1, 4)}))
 
 if __name__ == "__main__":
     unittest.main()

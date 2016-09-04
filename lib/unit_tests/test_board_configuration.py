@@ -29,16 +29,6 @@ class TestBoardConfiguration(unittest.TestCase):
         bc.special_positions = self.special_positions_2
         self.assertListEqual(bc.special_positions, self.special_positions_2)
 
-    def test_center_coo(self):
-        self.assertEqual(BoardConfiguration.center_coo(15, 15), (8, 8))
-        self.assertEqual(BoardConfiguration.center_coo(10, 10), (None, None))
-        self.assertEqual(BoardConfiguration.center_coo(15, 10), (8, None))
-
-    def test_in_bounds(self):
-        self.assertTrue(BoardConfiguration.in_bounds(Position(1, 2), {'x': (1, 4), 'y': (1, 4)}))
-        self.assertFalse(BoardConfiguration.in_bounds(Position(4, 6), {'x': (1, 4), 'y': (1, 4)}))
-        self.assertTrue(BoardConfiguration.in_bounds(Position(4, 4), {'x': (1, 4), 'y': (1, 4)}))
-
     def test_quadrant_bound(self):
         self.assertEqual(BoardConfiguration._quadrant_bounds(4, 4), {
             1: {'x': (3, 4), 'y': (1, 2)},

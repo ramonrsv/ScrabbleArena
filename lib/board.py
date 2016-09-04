@@ -10,21 +10,19 @@ class BoardContainer(DimensionProperty):
         self.__coo_list = list(self.__positions.keys())
         self.__coo_list.sort()
 
-    @staticmethod
-    def _create_position_object(position):
+    def _create_position_object(self, position):
         """Can be overloaded to create a different type of Position object (which should inherit from Position)"""
         return Position(position.x, position.y, position.property)
 
-    @classmethod
-    def _make_all_positions_dict(cls, board_configuration):
+    def _make_all_positions_dict(self, board_configuration):
         """Make a (x,y): Position dictionary of all the special positions, and fill in the rest"""
         ret = {}
         for pos in board_configuration.special_positions:
-            ret[pos.coo] = cls._create_position_object(pos)
+            ret[pos.coo] = self._create_position_object(pos)
         for y in range(1, board_configuration.height + 1):
             for x in range(1, board_configuration.width + 1):
                 if (x, y) not in ret:
-                    ret[(x, y)] = cls._create_position_object(Position(x, y))
+                    ret[(x, y)] = self._create_position_object(Position(x, y))
         return ret
 
     def positions(self):

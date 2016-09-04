@@ -15,5 +15,6 @@ class TestDistributions(unittest.TestCase):
             count += value
         self.assertEqual(count, 100)
 
+
 if __name__ == "__main__":
     unittest.main()

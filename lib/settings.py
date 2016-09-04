@@ -1,4 +1,6 @@
 from .tile import LetterDistribution, TileDistribution
+from .board_position import PosProperty, Position
+from .board_configuration import BoardConfiguration
 
 
 English_classic_letter_distribution = LetterDistribution(
@@ -62,3 +64,14 @@ English_classic_100_tile_distribution = TileDistribution(
         'X': 1,
         'Y': 2,
         'Z': 1})
+
+Words_with_friends_board_configuration = BoardConfiguration.from_corners_symmetry(15, 15, [
+    Position(4, 1, PosProperty.W3), Position(7, 1, PosProperty.L3),
+    Position(3, 2, PosProperty.L2), Position(6, 2, PosProperty.W2),
+    Position(2, 3, PosProperty.L2), Position(5, 3, PosProperty.L2),
+    Position(1, 4, PosProperty.W3), Position(4, 4, PosProperty.L3), Position(8, 4, PosProperty.W2),
+    Position(3, 5, PosProperty.L2), Position(7, 5, PosProperty.L2),
+    Position(2, 6, PosProperty.W2), Position(6, 6, PosProperty.L3),
+    Position(1, 7, PosProperty.L3), Position(5, 7, PosProperty.L2),
+    Position(4, 8, PosProperty.W2), Position(8, 8, PosProperty.CENTER)
+])

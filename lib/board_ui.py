@@ -27,21 +27,64 @@ class UiPosition(GameplayPosition, QtGui.QWidget):
 
 
 class UiBoard(GameplayBoard):
-    def __init__(self, widget, board_configuration):
+
+    _pos_width = 35
+    _pos_height = 35
+    _pos_spacing = 2
+
+    _pos_label_size = 30
+    _pos_label_ps_w_b = (10, 75, True)  # PointSize, Weight, Bold
+
+    def __init__(self, widget, x_label_widget, y_label_widget, board_configuration):
         self.widget = widget  # Used in UiPosition object construction
         GameplayBoard.__init__(self, board_configuration)
+        self._x_label_widget = x_label_widget
+        self._y_label_widget = y_label_widget
+        self._x_labels = []
+        self._y_labels = []
 
     def _create_position_object(self, position):
         return UiPosition(self.widget, self._pos_geometry(position), position.x, position.y, position.property)
 
     def _pos_geometry(self, pos):
         """Will return the geometry of a UiPosition based on board_container (Board) and ui_parent (QWidget)"""
-        pos_width = self.widget.width() / self.width
-        pos_height = self.widget.height() / self.height
-        rect_width = pos_width - 3  # -5 for debugging
-        rect_height = pos_height - 3
-        return QtCore.QRect((pos.x - 1) * pos_width, (pos.y - 1) * pos_height, rect_width, rect_height)
+        return QtCore.QRect((pos.x - 1) * self._pos_width + self._pos_spacing * pos.x,
+                            (pos.y - 1) * self._pos_height + self._pos_spacing * pos.y,
+                            self._pos_width, self._pos_height)
 
-    def draw(self):
+    def _label_geometry(self, pos):
+        """Takes pos in form (x,0) for x_axis, (0,y) for y_axis"""
+        return QtCore.QRect(
+            (pos[0] - 1) * self._pos_width + self._pos_spacing * pos[0] +
+            ((self._pos_width - self._pos_label_size) / 2) if pos[0] else 0,
+            (pos[1] - 1) * self._pos_height + self._pos_spacing * pos[1] +
+            ((self._pos_height - self._pos_label_size) / 2) if pos[1] else 0,
+            self._pos_label_size, self._pos_label_size)
+
+    def _draw_labels(self):
+        def create_label(coo, storage, parent, text):
+            l = QtGui.QLabel(parent)
+            l.setGeometry(self._label_geometry(coo))
+            l.setText(text)
+            l.setAlignment(QtCore.Qt.AlignCenter)
+            font = QtGui.QFont()
+            font.setPointSize(self._pos_label_ps_w_b[0])
+            font.setWeight(self._pos_label_ps_w_b[1])
+            font.setBold(self._pos_label_ps_w_b[2])
+            l.setFont(font)
+            storage.append(l)
+
+        for i in range(1, self.width + 1):
+            create_label((i, 0), self._x_labels, self._x_label_widget, UiPosition.x_to_alpha(i))
+            create_label((0, i), self._y_labels, self._y_label_widget, str(i))
+
+    def _draw_board(self):
         for pos in self.positions():
             pos.draw()
+
+    def initialize_display(self):
+        self._draw_labels()
+        self._draw_board()
+
+    def update_display(self):
+        self._draw_board()

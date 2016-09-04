@@ -1,36 +1,12 @@
 from .board_position import Position
+from .dimension_coordinate_properties import DimensionProperty
 
 
-class BoardConfiguration:
+class BoardConfiguration(DimensionProperty):
     def __init__(self, width, height, special_positions=None):
-        self.__width = width
-        self.__height = height
+        DimensionProperty.__init__(self, width, height)
         self.__special_positions = []
-        self.width = width
-        self.height = height
         self.special_positions = special_positions if special_positions else []
-
-    @staticmethod
-    def _dimension_check(dim):
-        if not isinstance(dim, int) or dim <= 0:
-            raise TypeError("invalid value: " + str(dim) + " - not a positive integer")
-        return dim
-
-    @property
-    def width(self):
-        return self.__width
-
-    @property
-    def height(self):
-        return self.__height
-
-    @width.setter
-    def width(self, w):
-        self.__width = self._dimension_check(w)
-
-    @height.setter
-    def height(self, h):
-        self.__height = self._dimension_check(h)
 
     @property
     def special_positions(self):

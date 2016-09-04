@@ -41,52 +41,6 @@ class TestPosition(unittest.TestCase):
         self.assertEqual(pos.x, 2)
         self.assertEqual(pos.y, 10)
 
-    def test_coo_to_alpha(self):
-        self.assertEqual(Position.coo_to_alpha(1), 'A')
-        self.assertEqual(Position.coo_to_alpha(26), 'Z')
-
-    def test_alpha_to_coo(self):
-        self.assertEqual(Position.alpha_to_coo('A'), 1)
-        self.assertEqual(Position.alpha_to_coo('a'), 1)
-        self.assertEqual(Position.alpha_to_coo('Z'), 26)
-        self.assertEqual(Position.alpha_to_coo('z'), 26)
-
-    def test_coo_to_alpha_type_error(self):
-        self.assertRaises(TypeError, lambda: Position.coo_to_alpha('A'))
-
-    def test_coo_to_alpha_value_error(self):
-        self.assertRaises(ValueError, lambda: Position.coo_to_alpha(27))
-
-    def test_alpha_to_coo_type_error(self):
-        self.assertRaises(TypeError, lambda: Position.alpha_to_coo('\n'))
-        self.assertRaises(TypeError, lambda: Position.alpha_to_coo(1))
-
-    def test_alpha_construction(self):
-        pos = Position('A', 3)
-        self.assertEqual(pos.x, 1)
-        self.assertEqual(pos.y, 3)
-
-    def test_alpha_property(self):
-        pos = Position('B', 10)
-        self.assertEqual(pos.x, 2)
-        self.assertEqual(pos.x_alpha, 'B')
-        self.assertEqual(pos.y, 10)
-
-    def test_alpha_setter(self):
-        pos = Position(1, 1)
-        self.assertEqual(pos.x, 1)
-        self.assertEqual(pos.y, 1)
-        pos.x = 'B'
-        self.assertEqual(pos.x, 2)
-        self.assertEqual(pos.x_alpha, 'B')
-        pos.x_alpha = 'C'
-        self.assertEqual(pos.x, 3)
-        self.assertEqual(pos.x_alpha, 'C')
-
-    def test_coo(self):
-        self.assertEqual(Position(1, 1).coo, (1, 1))
-        self.assertEqual(Position('Z', 10).coo, (26, 10))
-
     def test_property_default(self):
         self.assertEqual(Position(1, 1).property, PosProperty.normal)
 
@@ -95,6 +49,7 @@ class TestPosition(unittest.TestCase):
         self.assertEqual(pos.property, PosProperty.CENTER)
         pos.property = PosProperty.DL
         self.assertEqual(pos.property, PosProperty.DL)
+
 
 if __name__ == "__main__":
     unittest.main()

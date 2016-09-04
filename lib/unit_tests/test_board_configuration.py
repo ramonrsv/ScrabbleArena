@@ -20,22 +20,6 @@ class TestBoardConfiguration(unittest.TestCase):
         bc = BoardConfiguration(1, 15)
         self.assertEqual((bc.width, bc.height), (1, 15))
 
-    def test_dimension_setters(self):
-        bc = BoardConfiguration(15, 15)
-        self.assertEqual((bc.width, bc.height), (15, 15))
-        bc.width = 1
-        bc.height = 2
-        self.assertEqual((bc.width, bc.height), (1, 2))
-
-    def test_bad_dimension_construction(self):
-        self.assertRaises(TypeError, lambda: BoardConfiguration(-1, 0))
-        self.assertRaises(TypeError, lambda: BoardConfiguration('a', 'b'))
-
-    def test_bad_dimension_reassignment(self):
-        bc = BoardConfiguration(15, 15)
-        with self.assertRaises(TypeError):
-            bc.width = -1
-
     def test_special_positions_construction(self):
         bc = BoardConfiguration(15, 15, self.special_positions_1)
         self.assertListEqual(bc.special_positions, self.special_positions_1)
@@ -94,6 +78,7 @@ class TestBoardConfiguration(unittest.TestCase):
     def test_from_corners_symmetry(self):
         bc = BoardConfiguration.from_corners_symmetry(5, 5, self.special_positions_3)
         self.assertListEqual(sorted(bc.special_positions), sorted(self.special_positions_3_corner_symmetry))
+
 
 if __name__ == "__main__":
     unittest.main()

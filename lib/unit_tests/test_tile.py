@@ -62,5 +62,6 @@ class TestTile(unittest.TestCase):
     def test_get_letter_distribution(self):
         self.assertEqual(Tile.get_letter_distribution(), English_classic_letter_distribution.letters)
 
+
 if __name__ == "__main__":
     unittest.main()

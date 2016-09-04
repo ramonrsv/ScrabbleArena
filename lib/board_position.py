@@ -1,5 +1,5 @@
 from enum import Enum
-import string
+from .dimension_coordinate_properties import CoordinateProperty
 
 
 class PosProperty(Enum):
@@ -17,7 +17,11 @@ class PosProperty(Enum):
 
     @staticmethod
     def _get_letter_word_multiplier_dict():
-        return {PosProperty.L2: 2, PosProperty.L3: 3}, {PosProperty.W2: 2, PosProperty.W3: 3, PosProperty.W4: 4}
+        return {PosProperty.L2: 2,  # Letter multipliers
+                PosProperty.L3: 3},\
+               {PosProperty.W2: 2,  # Word multipliers
+                PosProperty.W3: 3,
+                PosProperty.W4: 4}
 
     @classmethod
     def letter_multiplier(cls, enum):
@@ -32,72 +36,11 @@ class PosProperty(Enum):
         return cls._get_letter_word_multiplier_dict()[1].get(enum, 1)
 
 
-class Position:
+class Position(CoordinateProperty):
     def __init__(self, x, y, pos_property=PosProperty.normal):
-        self.__x = x  # Not required, but here to follow PEP
-        self.__y = y
+        CoordinateProperty.__init__(self, x, y)
         self.__property = pos_property
-        self.x = x
-        self.y = y
         self.property = pos_property
-
-    def __eq__(self, other):
-        return bool(self.x == other.x and self.y == other.y and self.property == other.property)
-
-    def __lt__(self, other):
-        return (self.x, self.y, self.property) < (other.x, other.y, other.property)
-
-    @staticmethod
-    def coo_to_alpha(coo):
-        if not isinstance(coo, int) or coo <= 0:
-            raise TypeError("invalid value: '" + str(coo) + "' - is not a positive integer")
-        if coo > len(string.ascii_uppercase):
-            raise ValueError("invalid value: '" + str(coo) + "' - is greater than ascii_lowercase/uppercase")
-        return string.ascii_uppercase[coo - 1]
-
-    @staticmethod
-    def alpha_to_coo(alpha):
-        if alpha not in string.ascii_letters:
-            raise TypeError("invalid value: '" + str(alpha) + "' - not in ascii_letters")
-        return string.ascii_uppercase.index(alpha.upper()) + 1
-
-    @property
-    def x(self):
-        return self.__x
-
-    @property
-    def x_alpha(self):
-        return self.coo_to_alpha(self.x)
-
-    @x.setter
-    def x(self, x):
-        if isinstance(x, str):  # Allow alpha setting on x and constructor
-            self.x_alpha = x
-        else:
-            if not isinstance(x, int) or x <= 0:
-                raise TypeError("invalid value: '" + str(x) + "' - is not a positive integer")
-            self.__x = x
-
-    @x_alpha.setter
-    def x_alpha(self, xa):
-        try:
-            self.x = self.alpha_to_coo(xa)
-        except (TypeError, ValueError):
-            raise
-
-    @property
-    def y(self):
-        return self.__y
-
-    @y.setter
-    def y(self, y):
-        if not isinstance(y, int) or y <= 0:
-            raise TypeError("invalid value: '" + str(y) + "' - is not a positive integer")
-        self.__y = y
-
-    @property
-    def coo(self):
-        return self.x, self.y
 
     @property
     def property(self):

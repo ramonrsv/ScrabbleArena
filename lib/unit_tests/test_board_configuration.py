@@ -13,6 +13,7 @@ class TestBoardConfiguration(unittest.TestCase):
         self.special_positions_3_corner_symmetry = [Position(1, 1), Position(3, 1), Position(1, 3), Position(3, 3),
                                                     Position(5, 1), Position(5, 3),
                                                     Position(1, 5), Position(3, 5), Position(5, 5)]
+        self.bad_special_positions = [Position(1, 1), Position(5, 5)]  # Will cause duplicates in from_corners_symmetry
 
     def test_simple_construction(self):
         bc = BoardConfiguration(15, 15)
@@ -29,34 +30,6 @@ class TestBoardConfiguration(unittest.TestCase):
         bc.special_positions = self.special_positions_2
         self.assertListEqual(bc.special_positions, self.special_positions_2)
 
-    def test_quadrant_bound(self):
-        self.assertEqual(BoardConfiguration._quadrant_bounds(4, 4), {
-            1: {'x': (3, 4), 'y': (1, 2)},
-            2: {'x': (1, 2), 'y': (1, 2)},
-            3: {'x': (1, 2), 'y': (3, 4)},
-            4: {'x': (3, 4), 'y': (3, 4)}})
-
-        self.assertEqual(BoardConfiguration._quadrant_bounds(5, 5), {
-            1: {'x': (4, 5), 'y': (1, 2)},
-            2: {'x': (1, 2), 'y': (1, 2)},
-            3: {'x': (1, 2), 'y': (4, 5)},
-            4: {'x': (4, 5), 'y': (4, 5)}})
-
-        self.assertEqual(BoardConfiguration._quadrant_bounds(5, 5, inclusive=True), {
-            1: {'x': (3, 5), 'y': (1, 3)},
-            2: {'x': (1, 3), 'y': (1, 3)},
-            3: {'x': (1, 3), 'y': (3, 5)},
-            4: {'x': (3, 5), 'y': (3, 5)}})
-
-    def test_find_quadrant(self):
-        self.assertEqual(BoardConfiguration._find_quadrant(Position(5, 1), 5, 5), 1)
-        self.assertEqual(BoardConfiguration._find_quadrant(Position(1, 1), 5, 5), 2)
-        self.assertEqual(BoardConfiguration._find_quadrant(Position(1, 5), 5, 5), 3)
-        self.assertEqual(BoardConfiguration._find_quadrant(Position(5, 5), 5, 5), 4)
-        self.assertEqual(BoardConfiguration._find_quadrant(Position(3, 1), 5, 5), None)
-        self.assertEqual(BoardConfiguration._find_quadrant(Position(1, 3), 5, 5), None)
-        self.assertEqual(BoardConfiguration._find_quadrant(Position(3, 3), 5, 5), None)
-
     def test_mirror_position(self):
         self.assertEqual(BoardConfiguration._mirror_position(Position(1, 1), 'x', 5, 5), Position(5, 1))
         self.assertEqual(BoardConfiguration._mirror_position(Position(1, 1), 'y', 5, 5), Position(1, 5))
@@ -68,6 +41,10 @@ class TestBoardConfiguration(unittest.TestCase):
     def test_from_corners_symmetry(self):
         bc = BoardConfiguration.from_corners_symmetry(5, 5, self.special_positions_3)
         self.assertListEqual(sorted(bc.special_positions), sorted(self.special_positions_3_corner_symmetry))
+
+    def test_bad_from_corners_symmetry(self):
+        with self.assertRaises(ValueError):
+            BoardConfiguration.from_corners_symmetry(5, 5, self.bad_special_positions)
 
 
 if __name__ == "__main__":

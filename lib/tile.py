@@ -1,4 +1,6 @@
-import abc
+import copy
+import time
+import random
 
 
 class LetterError(TypeError):
@@ -7,7 +9,6 @@ class LetterError(TypeError):
 
 class Tile:
     """Interface class for Tiles. Specific Tiles (differ in language, letter distribution, etc.) inherit from it"""
-    __metaclass__ = abc.ABCMeta
 
     BLANK = None
     _letter_distribution = {None: 0}
@@ -18,10 +19,10 @@ class Tile:
         self.letter = letter
 
     @classmethod
-    def blank_tile(cls, letter=BLANK):
+    def blank_tile(cls, letter=None):
         """Permits the more intuitive initialization of a blank tile:
         tile = Tile.blank_tile('A') or tile = Tile.blank_tile(Tile.BLANK)"""
-        return cls(letter, blank=True)
+        return cls(letter if letter else cls.BLANK, blank=True)
 
     def isblank(self):
         return self.__blank
@@ -58,6 +59,32 @@ class Tile:
             raise TypeError("distribution has to be a LetterDistribution")
         cls.BLANK = distribution.BLANK
         cls._letter_distribution = distribution.letters
+
+
+class TileBag:
+    def __init__(self, tile_distribution):
+        self._tile_distribution = tile_distribution
+        self._tiles_left = copy.deepcopy(tile_distribution.tiles)
+        random.seed(time.time())  # Used for random tile selection
+
+    def remaining(self, letter=None):
+        """Return the number of 'letter' remaining - all tiles if letter==None"""
+        return self._tiles_left[letter] if letter else sum(n for key, n in self._tiles_left.items())
+
+    def take(self, n):
+        """Return n random tiles from the ones left in the bag"""
+        if self.remaining() < n:
+            raise ValueError("invalid value: " + str(n) + " - only " + str(self.remaining()) + " tiles left")
+        tiles_to_return = []
+        letters_available = [key for key, value in self._tiles_left.items() if value > 0]
+        for i in range(n):
+            rand_letter = letters_available[random.randrange(len(letters_available))]
+            tiles_to_return.append(
+                Tile(rand_letter, blank=True if rand_letter == self._tile_distribution.BLANK else False))
+            self._tiles_left[rand_letter] -= 1
+            if self._tiles_left[rand_letter] == 0:
+                letters_available.remove(rand_letter)
+        return tiles_to_return
 
 
 class LetterDistribution:

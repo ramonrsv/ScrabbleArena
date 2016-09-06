@@ -4,9 +4,9 @@ from .board import BoardConfiguration
 
 
 English_classic_letter_distribution = LetterDistribution(
-    blank=None,
+    blank='_',
     distribution={
-        None: 0,
+        '_': 0,
         'A': 1,
         'B': 3,
         'C': 3,
@@ -37,7 +37,7 @@ English_classic_letter_distribution = LetterDistribution(
 English_classic_100_tile_distribution = TileDistribution(
     letter_distribution=English_classic_letter_distribution,
     tile_distribution={
-        None: 2,
+        English_classic_letter_distribution.BLANK: 2,
         'A': 9,
         'B': 2,
         'C': 2,

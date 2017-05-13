@@ -1,9 +1,10 @@
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui
+from PyQt5.QtWidgets import QWidget, QLabel
 from .position import PosProperty
 from .gameplay import GameplayPosition, GameplayBoard
 
 
-class UiPosition(GameplayPosition, QtGui.QWidget):
+class UiPosition(GameplayPosition, QWidget):
 
     __tile_type_color = {
         PosProperty.normal: QtGui.QColor(192, 192, 192),
@@ -14,7 +15,7 @@ class UiPosition(GameplayPosition, QtGui.QWidget):
         PosProperty.W3: QtGui.QColor(255, 128, 0)}
 
     def __init__(self, parent, geometry, x, y, pos_property=PosProperty.normal):
-        QtGui.QWidget.__init__(self, parent)
+        QWidget.__init__(self, parent)
         GameplayPosition.__init__(self, x, y, pos_property)
         self.geometry = geometry
         self.setGeometry(self.geometry)
@@ -63,7 +64,7 @@ class UiBoard(GameplayBoard):
 
     def _draw_labels(self):
         def create_label(coo, storage, parent, text):
-            l = QtGui.QLabel(parent)
+            l = QLabel(parent)
             l.setGeometry(self._label_geometry(coo))
             l.setText(text)
             l.setAlignment(QtCore.Qt.AlignCenter)

@@ -27,9 +27,6 @@ class Tile:
     def isblank(self):
         return self.__blank
 
-    def __bool__(self):
-        return bool(self.letter)
-
     @property
     def letter(self):
         return self.__letter

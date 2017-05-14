@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>960</width>
-    <height>901</height>
+    <height>900</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -183,16 +183,16 @@
      </property>
     </widget>
    </widget>
-   <widget class="QWidget" name="stats_widget" native="true">
+   <widget class="QWidget" name="player1_stats_widget" native="true">
     <property name="geometry">
      <rect>
       <x>620</x>
       <y>210</y>
       <width>321</width>
-      <height>391</height>
+      <height>191</height>
      </rect>
     </property>
-    <widget class="QLabel" name="player1_label">
+    <widget class="QLabel" name="player_name_label_1">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -215,30 +215,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="player1_label_2">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>210</y>
-       <width>81</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>11</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Player 2</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QComboBox" name="player1_selection_box">
+    <widget class="QComboBox" name="player_selection_box_1">
      <property name="geometry">
       <rect>
        <x>110</x>
@@ -248,17 +225,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QComboBox" name="player2_selection_box">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>210</y>
-       <width>201</width>
-       <height>22</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="game_type_label_2">
+    <widget class="QLabel" name="score_label_1">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -279,7 +246,7 @@
       <string>Score</string>
      </property>
     </widget>
-    <widget class="QLCDNumber" name="player1_score_lcd">
+    <widget class="QLCDNumber" name="score_lcd_1">
      <property name="geometry">
       <rect>
        <x>70</x>
@@ -289,7 +256,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QLabel" name="game_type_label_3">
+    <widget class="QLabel" name="avg_word_score_label_1">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -310,7 +277,7 @@
       <string>Avg. Word Score</string>
      </property>
     </widget>
-    <widget class="QLCDNumber" name="player1_avg_word_score_lcd">
+    <widget class="QLCDNumber" name="avg_word_score_lcd_1">
      <property name="geometry">
       <rect>
        <x>180</x>
@@ -320,7 +287,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QLabel" name="game_type_label_4">
+    <widget class="QLabel" name="top_word_label_1">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -341,7 +308,7 @@
       <string>Top Word</string>
      </property>
     </widget>
-    <widget class="QLabel" name="game_type_label_5">
+    <widget class="QLabel" name="top_word_score_label_1">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -362,7 +329,7 @@
       <string>Top Word Score</string>
      </property>
     </widget>
-    <widget class="QLCDNumber" name="player1_top_word_score_lcd">
+    <widget class="QLCDNumber" name="top_word_score_lcd_1">
      <property name="geometry">
       <rect>
        <x>180</x>
@@ -372,7 +339,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QLineEdit" name="player1_top_word_line">
+    <widget class="QLineEdit" name="top_word_line_1">
      <property name="geometry">
       <rect>
        <x>110</x>
@@ -385,7 +352,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="game_type_label_6">
+    <widget class="QLabel" name="turns_label_1">
      <property name="geometry">
       <rect>
        <x>170</x>
@@ -406,7 +373,7 @@
       <string>Turns</string>
      </property>
     </widget>
-    <widget class="QLCDNumber" name="player1_turns_lcd">
+    <widget class="QLCDNumber" name="turns_lcd_1">
      <property name="geometry">
       <rect>
        <x>220</x>
@@ -416,7 +383,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QLineEdit" name="player2_longest_word_line">
+    <widget class="QLineEdit" name="longest_word_line_1">
      <property name="geometry">
       <rect>
        <x>110</x>
@@ -432,7 +399,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="game_type_label_7">
+    <widget class="QLabel" name="longest_word_label_1">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -451,204 +418,6 @@
      </property>
      <property name="text">
       <string>Longest W.</string>
-     </property>
-    </widget>
-    <widget class="QLCDNumber" name="player2_turns_lcd">
-     <property name="geometry">
-      <rect>
-       <x>220</x>
-       <y>240</y>
-       <width>64</width>
-       <height>23</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLCDNumber" name="player2_avg_word_score_lcd">
-     <property name="geometry">
-      <rect>
-       <x>180</x>
-       <y>270</y>
-       <width>64</width>
-       <height>23</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="game_type_label_8">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>270</y>
-       <width>121</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>11</pointsize>
-       <weight>50</weight>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Avg. Word Score</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="game_type_label_9">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>300</y>
-       <width>111</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>11</pointsize>
-       <weight>50</weight>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Top Word Score</string>
-     </property>
-    </widget>
-    <widget class="QLCDNumber" name="player2_top_word_score_lcd">
-     <property name="geometry">
-      <rect>
-       <x>180</x>
-       <y>300</y>
-       <width>64</width>
-       <height>23</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="player2_top_word_line">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>330</y>
-       <width>201</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="game_type_label_10">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>240</y>
-       <width>81</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>11</pointsize>
-       <weight>50</weight>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Score</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="game_type_label_11">
-     <property name="geometry">
-      <rect>
-       <x>170</x>
-       <y>240</y>
-       <width>81</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>11</pointsize>
-       <weight>50</weight>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Turns</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="game_type_label_12">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>330</y>
-       <width>91</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>11</pointsize>
-       <weight>50</weight>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Top Word</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="game_type_label_13">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>360</y>
-       <width>91</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>11</pointsize>
-       <weight>50</weight>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Longest W.</string>
-     </property>
-    </widget>
-    <widget class="QLCDNumber" name="player2_score_lcd">
-     <property name="geometry">
-      <rect>
-       <x>70</x>
-       <y>240</y>
-       <width>64</width>
-       <height>23</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="player2_longest_word_line_2">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>360</y>
-       <width>201</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
      </property>
     </widget>
    </widget>
@@ -743,6 +512,244 @@
        <width>382</width>
        <height>39</height>
       </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="player2_stats_widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>420</y>
+      <width>321</width>
+      <height>191</height>
+     </rect>
+    </property>
+    <widget class="QLabel" name="player_name_label_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Player 2</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="player_selection_box_2">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>10</y>
+       <width>201</width>
+       <height>22</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="score_label_2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Score</string>
+     </property>
+    </widget>
+    <widget class="QLCDNumber" name="score_lcd_2">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>40</y>
+       <width>64</width>
+       <height>23</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="avg_word_score_label_2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>70</y>
+       <width>121</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Avg. Word Score</string>
+     </property>
+    </widget>
+    <widget class="QLCDNumber" name="avg_word_score_lcd_2">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>70</y>
+       <width>64</width>
+       <height>23</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="top_word_label_2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>130</y>
+       <width>91</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Top Word</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="top_word_score_label_2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>100</y>
+       <width>111</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Top Word Score</string>
+     </property>
+    </widget>
+    <widget class="QLCDNumber" name="top_word_score_lcd_2">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>100</y>
+       <width>64</width>
+       <height>23</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="top_word_line_2">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>130</y>
+       <width>201</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="turns_label_2">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>40</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Turns</string>
+     </property>
+    </widget>
+    <widget class="QLCDNumber" name="turns_lcd_2">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>40</y>
+       <width>64</width>
+       <height>23</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="longest_word_line_2">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>160</y>
+       <width>201</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="longest_word_label_2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>160</y>
+       <width>91</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Longest W.</string>
      </property>
     </widget>
    </widget>

@@ -36,7 +36,7 @@ class TileTray:
     def tiles(self):
         return self._tiles
 
-    def take(self, tile):
+    def remove(self, tile):
         if tile not in self.tiles:
             raise RuntimeError("tile not found in list")
         self.tiles.remove(tile)

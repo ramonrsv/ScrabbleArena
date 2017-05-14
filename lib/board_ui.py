@@ -8,9 +8,9 @@ from .tile import Tile
 
 
 class UiTile(Tile, QPushButton):
-    _width = 28
-    _height = 28
-    _font_point_size = 12
+    _width = 31
+    _height = 31
+    _font_point_size = 18
 
     def __init__(self, tile, parent=None):
         if parent:
@@ -25,6 +25,7 @@ class UiTile(Tile, QPushButton):
         self.setFixedHeight(self.height)
         self.setText(self.letter if not self.isblank() else '')
         font = QtGui.QFont()
+        font.setFamily("Helvetica")
         font.setBold(True)
         font.setPointSize(self._font_point_size)
         self.setFont(font)
@@ -102,6 +103,11 @@ class UiBasicPosition(QWidget):
         if self.has_tile():
             self.tile.show()
 
+    def hide(self):
+        QWidget.hide(self)
+        if self.has_tile():
+            self.tile.hide()
+
 
 class UiTrayPosition(UiBasicPosition):
     __emptry_tray_position_color = QtGui.QColor(192, 192, 192)
@@ -152,9 +158,13 @@ class UiTileTray(TileTray):
                                                      self._pos_width, self._pos_height)))
         return temp_positions
 
-    def update_display(self):
+    def show(self):
         for pos in self._positions:
             pos.show()
+
+    def hide(self):
+        for pos in self._positions:
+            pos.hide()
 
 
 class UiBoard(GameplayBoard):
@@ -215,6 +225,12 @@ class UiBoard(GameplayBoard):
     def _set_display_properties(self):
         self._draw_labels()
 
-    def update_display(self):
-        for pos in self.positions():
-            pos.show()
+    def show(self):
+        for obj_list in [self.positions(), self._x_labels, self._y_labels]:
+            for obj in obj_list:
+                obj.show()
+
+    def hide(self):
+        for obj_list in [self.positions(), self._x_labels, self._y_labels]:
+            for obj in obj_list:
+                obj.hide()

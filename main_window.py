@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(960, 900)
+        MainWindow.resize(960, 1010)
         MainWindow.setMinimumSize(QtCore.QSize(960, 800))
         MainWindow.setMaximumSize(QtCore.QSize(960, 1080))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -284,6 +284,12 @@ class Ui_MainWindow(object):
         font.setWeight(50)
         self.longest_word_label_2.setFont(font)
         self.longest_word_label_2.setObjectName("longest_word_label_2")
+        self.debug_area_widget = QtWidgets.QWidget(self.centralwidget)
+        self.debug_area_widget.setGeometry(QtCore.QRect(20, 860, 921, 101))
+        self.debug_area_widget.setObjectName("debug_area_widget")
+        self.toggle_configuration = QtWidgets.QPushButton(self.debug_area_widget)
+        self.toggle_configuration.setGeometry(QtCore.QRect(30, 10, 111, 23))
+        self.toggle_configuration.setObjectName("toggle_configuration")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 960, 21))
@@ -320,4 +326,5 @@ class Ui_MainWindow(object):
         self.top_word_score_label_2.setText(_translate("MainWindow", "Top Word Score"))
         self.turns_label_2.setText(_translate("MainWindow", "Turns"))
         self.longest_word_label_2.setText(_translate("MainWindow", "Longest W."))
+        self.toggle_configuration.setText(_translate("MainWindow", "ToggleConfiguration"))
 

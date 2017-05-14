@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>960</width>
-    <height>900</height>
+    <height>1010</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -750,6 +750,29 @@
      </property>
      <property name="text">
       <string>Longest W.</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="debug_area_widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>860</y>
+      <width>921</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <widget class="QPushButton" name="toggle_configuration">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>10</y>
+       <width>111</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>ToggleConfiguration</string>
      </property>
     </widget>
    </widget>

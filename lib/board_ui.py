@@ -1,17 +1,36 @@
 from PyQt5 import QtCore, QtGui
-from PyQt5.QtWidgets import QWidget, QLabel
+from PyQt5.QtWidgets import QWidget, QLabel, QPushButton
 from .position import PosProperty
 from .gameplay import GameplayPosition, GameplayBoard, TileTray
 from .tile import Tile
 
 
-class UiTile(Tile, QWidget):
-    _width = 25
-    _height = 25
+class UiTile(Tile, QPushButton):
+    _width = 28
+    _height = 28
+    _font_point_size = 12
 
-    def __init__(self, parent, tile):
-        QWidget.__init__(self, parent)
+    def __init__(self, tile):
+        QPushButton.__init__(self)
         Tile.__init__(self, tile.letter, tile.isblank())  # TODO: not really elegant
+        self.setFixedWidth(self.width)
+        self.setFixedHeight(self.height)
+        self._set_text()
+
+    @property
+    def width(self):
+        return self._width
+
+    @property
+    def height(self):
+        return self._height
+
+    def _set_text(self):
+        self.setText(self.letter if not self.isblank() else '')
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setPointSize(self._font_point_size)
+        self.setFont(font)
 
 
 class UiBasicPosition(QWidget):
@@ -22,6 +41,27 @@ class UiBasicPosition(QWidget):
         self.geometry = geometry
         self.setGeometry(self.geometry)
         self._color = color
+        self._tile = None  # To hold tile object placed in this position
+
+    @property
+    def tile(self):
+        return self._tile
+
+    @tile.setter
+    def tile(self, tile):
+        if not isinstance(tile, Tile):
+            raise TypeError("tile has to be a Tile object")
+        if self._tile:
+            raise RuntimeError("position already has a tile object")
+        self._tile = tile
+        self.tile.setParent(self)
+        self.tile.move(self.rect().center() - self.tile.rect().center())  # Center tile in space
+
+    def has_tile(self):
+        return True if self.tile else False
+
+    def set_tile(self, tile):
+        self.tile = tile
 
     def draw(self):
         self.setAutoFillBackground(True)
@@ -42,6 +82,10 @@ class UiBoardPosition(GameplayPosition, UiBasicPosition):
     def __init__(self, parent, geometry, x, y, pos_property=PosProperty.normal):
         GameplayPosition.__init__(self, x, y, pos_property)
         UiBasicPosition.__init__(self, parent, geometry, self.__pos_type_color[self.property])
+        self.setAcceptDrops(True)  # Allow drag and drop
+
+    def dragEnterEvent(self, event):  # TODO: implement
+        event.ignore()
 
 
 class UiTrayPosition(UiBasicPosition):
@@ -57,7 +101,7 @@ class UiTileTray(TileTray):
     _pos_spacing = 2
 
     def __init__(self, widget, tiles, size):
-        TileTray.__init__(self, tiles, size)
+        TileTray.__init__(self, [UiTile(tile) for tile in tiles], size)
         self._widget = widget
         self._positions = self._generate_positions()
 
@@ -71,6 +115,11 @@ class UiTileTray(TileTray):
         return temp_positions
 
     def initialize_display(self):
+        self.update_display()
+
+    def update_display(self):
+        for i in range(len(self.tiles)):
+            self._positions[i].set_tile(self.tiles[i])
         for pos in self._positions:
             pos.draw()
 

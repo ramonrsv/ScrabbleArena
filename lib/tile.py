@@ -12,6 +12,11 @@ class Tile:
 
     BLANK = None
     _letter_distribution = {None: 0}
+    # TODO: The solution of having a globally set letter distribution for all Tiles is rather dirty
+    # It has to be set before Tiles are used (see use in test_tile.py) and changing it after could be problematic
+    # You also need to know what LetterDistribution a TileDistribution uses before creating a TileBag
+    # The intended purpose was to have, say, EnglishTile defined with the given LetterDistribution set, but Tile
+    # has been used directly everywhere - see how that affects things.
 
     def __init__(self, letter, blank=False):
         self.__blank = blank
@@ -37,7 +42,7 @@ class Tile:
             if letter.upper() in self._letter_distribution:
                 raise LetterError(str(letter) +
                                   "is not a valid letter - 'letter_distribution' is generally only uppercase")
-            raise LetterError(str(letter) + "is not a valid letter")
+            raise LetterError(str(letter) + " is not a valid letter")
         self.__letter = letter
 
     @property
@@ -106,3 +111,4 @@ class TileDistribution:
             raise ValueError("tile_distribution has to have an entry for every letter in letter_distribution")
         self.BLANK = letter_distribution.BLANK
         self.tiles = tile_distribution
+        self.letter_distribution = letter_distribution

@@ -84,3 +84,5 @@ Words_with_friends_fast_play_board_configuration = BoardConfiguration.from_corne
     Position('C', 5, PosProperty.L2),
     Position('B', 5, PosProperty.W2)
 ])
+
+Standard_player_tray_size = 10

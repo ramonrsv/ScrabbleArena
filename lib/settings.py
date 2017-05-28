@@ -1,5 +1,5 @@
 from .tile import LetterDistribution, TileDistribution
-from .position import PosProperty, Position
+from .position import PositionProperty, Position
 from .board import BoardConfiguration
 
 
@@ -65,24 +65,53 @@ English_classic_100_tile_distribution = TileDistribution(
         'Y': 2,
         'Z': 1})
 
+
+class EnglishClassicPositionProperty(PositionProperty):
+    normal = 0
+    CENTER = 1
+    DL = 2
+    TL = 3
+    DW = 4
+    TW = 5
+    L2 = DL
+    L3 = TL
+    W2 = DW
+    W3 = TW
+    W4 = 6
+
+    @classmethod
+    def _letter_multiplier_dict(cls):
+        return cls._get_full_letter_multiplier_dict(
+            {cls.DL: 2, cls.TL: 3,
+             cls.L2: 2, cls.L3: 3}, default_value=1)
+
+    @classmethod
+    def _word_multiplier_dict(cls):
+        return cls._get_full_word_multiplier_dict(
+            {cls.DW: 2, cls.TW: 3,
+             cls.W2: 2, cls.W3: 3, cls.W4: 4}, default_value=1)
+
+
 Words_with_friends_board_configuration = BoardConfiguration.from_corners_symmetry(15, 15, [
-    Position(4, 1, PosProperty.W3), Position(7, 1, PosProperty.L3),
-    Position(3, 2, PosProperty.L2), Position(6, 2, PosProperty.W2),
-    Position(2, 3, PosProperty.L2), Position(5, 3, PosProperty.L2),
-    Position(1, 4, PosProperty.W3), Position(4, 4, PosProperty.L3), Position(8, 4, PosProperty.W2),
-    Position(3, 5, PosProperty.L2), Position(7, 5, PosProperty.L2),
-    Position(2, 6, PosProperty.W2), Position(6, 6, PosProperty.L3),
-    Position(1, 7, PosProperty.L3), Position(5, 7, PosProperty.L2),
-    Position(4, 8, PosProperty.W2), Position(8, 8, PosProperty.CENTER)
+    Position(4, 1, EnglishClassicPositionProperty.W3), Position(7, 1, EnglishClassicPositionProperty.L3),
+    Position(3, 2, EnglishClassicPositionProperty.L2), Position(6, 2, EnglishClassicPositionProperty.W2),
+    Position(2, 3, EnglishClassicPositionProperty.L2), Position(5, 3, EnglishClassicPositionProperty.L2),
+    Position(1, 4, EnglishClassicPositionProperty.W3), Position(4, 4, EnglishClassicPositionProperty.L3),
+    Position(8, 4, EnglishClassicPositionProperty.W2),
+    Position(3, 5, EnglishClassicPositionProperty.L2), Position(7, 5, EnglishClassicPositionProperty.L2),
+    Position(2, 6, EnglishClassicPositionProperty.W2), Position(6, 6, EnglishClassicPositionProperty.L3),
+    Position(1, 7, EnglishClassicPositionProperty.L3), Position(5, 7, EnglishClassicPositionProperty.L2),
+    Position(4, 8, EnglishClassicPositionProperty.W2), Position(8, 8, EnglishClassicPositionProperty.CENTER)
 ])
 
 Words_with_friends_fast_play_board_configuration = BoardConfiguration.from_corners_symmetry(11, 11, [
-    Position('A', 1, PosProperty.L3), Position('C', 1, PosProperty.W3),
-    Position('B', 2, PosProperty.W2), Position('F', 2, PosProperty.W2),
-    Position('A', 3, PosProperty.W3), Position('C', 3, PosProperty.L2), Position('E', 3, PosProperty.L2),
-    Position('D', 4, PosProperty.L3),
-    Position('C', 5, PosProperty.L2),
-    Position('B', 5, PosProperty.W2)
+    Position('A', 1, EnglishClassicPositionProperty.L3), Position('C', 1, EnglishClassicPositionProperty.W3),
+    Position('B', 2, EnglishClassicPositionProperty.W2), Position('F', 2, EnglishClassicPositionProperty.W2),
+    Position('A', 3, EnglishClassicPositionProperty.W3), Position('C', 3, EnglishClassicPositionProperty.L2),
+    Position('E', 3, EnglishClassicPositionProperty.L2),
+    Position('D', 4, EnglishClassicPositionProperty.L3),
+    Position('C', 5, EnglishClassicPositionProperty.L2),
+    Position('B', 5, EnglishClassicPositionProperty.W2)
 ])
 
 Standard_player_tray_size = 10

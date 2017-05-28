@@ -1,10 +1,10 @@
 from .position import Position
-from .dimension_coordinate_properties import DimensionProperty
+from .dimension_and_coordinate import Dimension
 
 
-class BoardContainer(DimensionProperty):
+class BoardContainer(Dimension):
     def __init__(self, board_configuration):
-        DimensionProperty.__init__(self, board_configuration.width, board_configuration.height)
+        Dimension.__init__(self, board_configuration.width, board_configuration.height)
         self.__config = board_configuration
         self.__positions = self._make_all_positions_dict(board_configuration)
         self.__coo_list = list(self.__positions.keys())
@@ -35,9 +35,9 @@ class BoardContainer(DimensionProperty):
         return self.__positions.get(Position(coo[0], coo[1]).coo, None)  # Accept ('A',1) form, helped by Position
 
 
-class BoardConfiguration(DimensionProperty):
+class BoardConfiguration(Dimension):
     def __init__(self, width, height, special_positions=None):
-        DimensionProperty.__init__(self, width, height)
+        Dimension.__init__(self, width, height)
         self.__special_positions = []
         self.special_positions = special_positions if special_positions else []
 

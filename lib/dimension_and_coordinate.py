@@ -1,7 +1,7 @@
 import string
 
 
-class DimensionProperty:
+class Dimension:
     def __init__(self, width, height):
         self.__width = width  # Not required in __init__, but here to follow PEP
         self.__height = height
@@ -40,7 +40,7 @@ class DimensionProperty:
         return bounds['x'][0] <= pos[0] <= bounds['x'][1] and bounds['y'][0] <= pos[1] <= bounds['y'][1]
 
 
-class CoordinateProperty:
+class Coordinate:
     def __init__(self, x, y):
         self.__x = x  # Not required, but here to follow PEP
         self.__y = y
@@ -54,12 +54,12 @@ class CoordinateProperty:
         return (self.x, self.y) < (other.x, other.y)
 
     @staticmethod
-    def x_to_alpha(coo):
-        if not isinstance(coo, int) or coo <= 0:
-            raise TypeError("invalid value: '" + str(coo) + "' - is not a positive integer")
-        if coo > len(string.ascii_uppercase):
-            raise ValueError("invalid value: '" + str(coo) + "' - is greater than ascii_lowercase/uppercase")
-        return string.ascii_uppercase[coo - 1]
+    def x_to_alpha(x):
+        if not isinstance(x, int) or x <= 0:
+            raise TypeError("invalid value: '" + str(x) + "' - is not a positive integer")
+        if x > len(string.ascii_uppercase):
+            raise ValueError("invalid value: '" + str(x) + "' - is greater than ascii_lowercase/uppercase")
+        return string.ascii_uppercase[x - 1]
 
     @staticmethod
     def alpha_to_x(alpha):

@@ -1,5 +1,5 @@
 from enum import Enum
-from .dimension_coordinate_properties import CoordinateProperty
+from .dimension_and_coordinate import Coordinate
 
 
 class PosProperty(Enum):
@@ -36,9 +36,9 @@ class PosProperty(Enum):
         return cls._get_letter_word_multiplier_dict()[1].get(enum, 1)
 
 
-class Position(CoordinateProperty):
+class Position(Coordinate):
     def __init__(self, x, y, pos_property=PosProperty.normal):
-        CoordinateProperty.__init__(self, x, y)
+        Coordinate.__init__(self, x, y)
         self.__property = pos_property
         self.property = pos_property
 

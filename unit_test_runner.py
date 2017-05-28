@@ -14,7 +14,7 @@ all_unit_test_scripts = ['test_board',
                          'test_position',
                          'test_tile',
                          'test_settings',
-                         'test_dimension_coordinate_properties']
+                         'test_dimension_and_coordinate']
 
 if not params or params[0] in ['all', 'All', 'ALL']:
     params = all_unit_test_scripts

@@ -10,9 +10,9 @@ class PositionProperty(Enum):
     @classmethod
     @abstractmethod
     def _letter_multiplier_dict(cls):
-        # Because 'Enums' not defined in partial_dict are given the 'default_value', errors in partial_dict may go
-        # undetected. However, forcing the user to define value for all 'Enums' would be error prone and not offer
-        # any more error checking functionality.
+        # Because 'Enums' not defined in partial_dict (in _create_full_multiplier_dict) are given the 'default_value',
+        # errors in partial_dict may go undetected. However, forcing the user to define value for all 'Enums' would be
+        # error prone and not offer any more error checking functionality.
         pass  # Define as return cls._get_full_letter_multiplier_dict({?}, default_value=?)
 
     @classmethod

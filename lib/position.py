@@ -69,3 +69,29 @@ class Position(Coordinate):
         if not isinstance(pos_property, PositionProperty):
             raise TypeError("invalid type: " + str(type(pos_property)) + " - is not " + str(type(PositionProperty)))
         self.__property = pos_property
+
+
+class ClassicPositionProperty(PositionProperty):
+    normal = 0
+    CENTER = 1
+    DL = 2
+    TL = 3
+    DW = 4
+    TW = 5
+    L2 = DL
+    L3 = TL
+    W2 = DW
+    W3 = TW
+    W4 = 6
+
+    @classmethod
+    def _letter_multiplier_dict(cls):
+        return cls._get_full_letter_multiplier_dict(
+            {cls.DL: 2, cls.TL: 3,
+             cls.L2: 2, cls.L3: 3}, default_value=1)
+
+    @classmethod
+    def _word_multiplier_dict(cls):
+        return cls._get_full_word_multiplier_dict(
+            {cls.DW: 2, cls.TW: 3,
+             cls.W2: 2, cls.W3: 3, cls.W4: 4}, default_value=1)

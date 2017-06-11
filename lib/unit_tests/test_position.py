@@ -1,52 +1,52 @@
 import unittest
 from ..position import PositionProperty, Position
-from ..settings import EnglishClassicPositionProperty
+from lib.position import ClassicPositionProperty
 
 
-class TestPositionPropertyUsingEnglishClassic(unittest.TestCase):
+class TestPositionPropertyUsingClassicPosition(unittest.TestCase):
     def test_simple_isinstance(self):
-        self.assertIsInstance(EnglishClassicPositionProperty.normal, EnglishClassicPositionProperty)
-        self.assertIsInstance(EnglishClassicPositionProperty.CENTER, EnglishClassicPositionProperty)
-        self.assertIsInstance(EnglishClassicPositionProperty.DW, EnglishClassicPositionProperty)
-        self.assertIsInstance(EnglishClassicPositionProperty.W3, EnglishClassicPositionProperty)
+        self.assertIsInstance(ClassicPositionProperty.normal, ClassicPositionProperty)
+        self.assertIsInstance(ClassicPositionProperty.CENTER, ClassicPositionProperty)
+        self.assertIsInstance(ClassicPositionProperty.DW, ClassicPositionProperty)
+        self.assertIsInstance(ClassicPositionProperty.W3, ClassicPositionProperty)
 
     def test_equal_enums(self):
-        self.assertEqual(EnglishClassicPositionProperty.L2, EnglishClassicPositionProperty.DL)
-        self.assertEqual(EnglishClassicPositionProperty.L3, EnglishClassicPositionProperty.TL)
-        self.assertEqual(EnglishClassicPositionProperty.W2, EnglishClassicPositionProperty.DW)
-        self.assertEqual(EnglishClassicPositionProperty.W3, EnglishClassicPositionProperty.TW)
+        self.assertEqual(ClassicPositionProperty.L2, ClassicPositionProperty.DL)
+        self.assertEqual(ClassicPositionProperty.L3, ClassicPositionProperty.TL)
+        self.assertEqual(ClassicPositionProperty.W2, ClassicPositionProperty.DW)
+        self.assertEqual(ClassicPositionProperty.W3, ClassicPositionProperty.TW)
 
     def test_bool_op(self):
-        self.assertFalse(True if EnglishClassicPositionProperty.normal.value else False)
-        self.assertTrue(True if EnglishClassicPositionProperty.CENTER.value else False)
-        self.assertFalse(bool(EnglishClassicPositionProperty.normal.value))
-        self.assertTrue(bool(EnglishClassicPositionProperty.CENTER.value))
+        self.assertFalse(True if ClassicPositionProperty.normal.value else False)
+        self.assertTrue(True if ClassicPositionProperty.CENTER.value else False)
+        self.assertFalse(bool(ClassicPositionProperty.normal.value))
+        self.assertTrue(bool(ClassicPositionProperty.CENTER.value))
 
     def test_class_letter_multiplier(self):
-        self.assertEqual(EnglishClassicPositionProperty.get_letter_multiplier(EnglishClassicPositionProperty.normal), 1)
-        self.assertEqual(EnglishClassicPositionProperty.get_letter_multiplier(EnglishClassicPositionProperty.DW), 1)
-        self.assertEqual(EnglishClassicPositionProperty.get_letter_multiplier(EnglishClassicPositionProperty.L2), 2)
-        self.assertEqual(EnglishClassicPositionProperty.get_letter_multiplier(EnglishClassicPositionProperty.L3), 3)
+        self.assertEqual(ClassicPositionProperty.get_letter_multiplier(ClassicPositionProperty.normal), 1)
+        self.assertEqual(ClassicPositionProperty.get_letter_multiplier(ClassicPositionProperty.DW), 1)
+        self.assertEqual(ClassicPositionProperty.get_letter_multiplier(ClassicPositionProperty.L2), 2)
+        self.assertEqual(ClassicPositionProperty.get_letter_multiplier(ClassicPositionProperty.L3), 3)
 
     def test_class_word_multiplier(self):
-        self.assertEqual(EnglishClassicPositionProperty.get_word_multiplier(EnglishClassicPositionProperty.normal), 1)
-        self.assertEqual(EnglishClassicPositionProperty.get_word_multiplier(EnglishClassicPositionProperty.DL), 1)
-        self.assertEqual(EnglishClassicPositionProperty.get_word_multiplier(EnglishClassicPositionProperty.W2), 2)
-        self.assertEqual(EnglishClassicPositionProperty.get_word_multiplier(EnglishClassicPositionProperty.W3), 3)
-        self.assertEqual(EnglishClassicPositionProperty.get_word_multiplier(EnglishClassicPositionProperty.W4), 4)
+        self.assertEqual(ClassicPositionProperty.get_word_multiplier(ClassicPositionProperty.normal), 1)
+        self.assertEqual(ClassicPositionProperty.get_word_multiplier(ClassicPositionProperty.DL), 1)
+        self.assertEqual(ClassicPositionProperty.get_word_multiplier(ClassicPositionProperty.W2), 2)
+        self.assertEqual(ClassicPositionProperty.get_word_multiplier(ClassicPositionProperty.W3), 3)
+        self.assertEqual(ClassicPositionProperty.get_word_multiplier(ClassicPositionProperty.W4), 4)
 
     def test_object_letter_multiplier(self):
-        self.assertEqual(EnglishClassicPositionProperty.normal.letter_multiplier(), 1)
-        self.assertEqual(EnglishClassicPositionProperty.DW.letter_multiplier(), 1)
-        self.assertEqual(EnglishClassicPositionProperty.L2.letter_multiplier(), 2)
-        self.assertEqual(EnglishClassicPositionProperty.L3.letter_multiplier(), 3)
+        self.assertEqual(ClassicPositionProperty.normal.letter_multiplier(), 1)
+        self.assertEqual(ClassicPositionProperty.DW.letter_multiplier(), 1)
+        self.assertEqual(ClassicPositionProperty.L2.letter_multiplier(), 2)
+        self.assertEqual(ClassicPositionProperty.L3.letter_multiplier(), 3)
 
     def test_object_word_multiplier(self):
-        self.assertEqual(EnglishClassicPositionProperty.normal.word_multiplier(), 1)
-        self.assertEqual(EnglishClassicPositionProperty.DL.word_multiplier(), 1)
-        self.assertEqual(EnglishClassicPositionProperty.W2.word_multiplier(), 2)
-        self.assertEqual(EnglishClassicPositionProperty.W3.word_multiplier(), 3)
-        self.assertEqual(EnglishClassicPositionProperty.W4.word_multiplier(), 4)
+        self.assertEqual(ClassicPositionProperty.normal.word_multiplier(), 1)
+        self.assertEqual(ClassicPositionProperty.DL.word_multiplier(), 1)
+        self.assertEqual(ClassicPositionProperty.W2.word_multiplier(), 2)
+        self.assertEqual(ClassicPositionProperty.W3.word_multiplier(), 3)
+        self.assertEqual(ClassicPositionProperty.W4.word_multiplier(), 4)
 
 
 class TestNewPositionProperty(unittest.TestCase):
@@ -77,19 +77,19 @@ class TestNewPositionProperty(unittest.TestCase):
 
 class TestPosition(unittest.TestCase):
     def test_simple_construction(self):
-        pos = Position(2, 10, EnglishClassicPositionProperty.normal)
+        pos = Position(2, 10, ClassicPositionProperty.normal)
         self.assertEqual(pos.x, 2)
         self.assertEqual(pos.y, 10)
 
     def test_property_default(self):
-        self.assertEqual(Position(1, 1, EnglishClassicPositionProperty.normal).property,
-                         EnglishClassicPositionProperty.normal)
+        self.assertEqual(Position(1, 1, ClassicPositionProperty.normal).property,
+                         ClassicPositionProperty.normal)
 
     def test_property_construction_and_setter(self):
-        pos = Position(1, 1, EnglishClassicPositionProperty.CENTER)
-        self.assertEqual(pos.property, EnglishClassicPositionProperty.CENTER)
-        pos.property = EnglishClassicPositionProperty.DL
-        self.assertEqual(pos.property, EnglishClassicPositionProperty.DL)
+        pos = Position(1, 1, ClassicPositionProperty.CENTER)
+        self.assertEqual(pos.property, ClassicPositionProperty.CENTER)
+        pos.property = ClassicPositionProperty.DL
+        self.assertEqual(pos.property, ClassicPositionProperty.DL)
 
 
 if __name__ == "__main__":

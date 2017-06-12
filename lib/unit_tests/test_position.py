@@ -1,5 +1,5 @@
 import unittest
-from ..position import PositionProperty, Position
+from lib.position import PositionProperty, Position
 from lib.position import ClassicPositionProperty
 
 

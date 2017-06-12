@@ -13,7 +13,7 @@ class TestLetterValueMap(unittest.TestCase):
             'E': 1
         })
 
-    def test_BLANK_property(self):
+    def test_BLANK_property_access(self):
         self.assertIsInstance(LetterValueMap.BLANK, str)
         self.assertIsInstance(self.sample_lvm1.BLANK, str)
         self.assertEqual(len(LetterValueMap.BLANK), 1)

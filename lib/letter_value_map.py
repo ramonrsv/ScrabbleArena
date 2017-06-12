@@ -1,14 +1,10 @@
 
 
-# TODO: Figure out exactly how this works
-class ClassProperty(property):
-    def __get__(self, cls, owner):
-        return self.fget.__get__(None, owner)()
-
-
 class LetterValueMap:
     """Contains a map of all Letters and their respective values, as well as the globally used BLANK constant"""
-    __BLANK = " "
+    BLANK = " "
+    # TODO: Because __set__ nor __del__ are NOT called when accessing attribute via class, all attempts at making
+    # TODO: a const class attribute have fail. Find a way, and write Unit Test!
 
     def __init__(self, letter_value_dict):
         if not isinstance(letter_value_dict, dict):
@@ -21,11 +17,6 @@ class LetterValueMap:
         if self.BLANK not in letter_value_dict:
             raise ValueError("BLANK must be defined in letter_value_dict")
         self._letter_value_dict = letter_value_dict
-
-    @ClassProperty  # TODO: Figure out why PyCharm gives a warning
-    @classmethod
-    def BLANK(cls):
-        return cls.__BLANK
 
     def get_letter_value(self, letter):
         return self._letter_value_dict[letter]

@@ -5,7 +5,7 @@ from lib.letter_value_map import LetterValueMap
 class TestLetterValueMap(unittest.TestCase):
     def setUp(self):
         self.sample_lvm1 = LetterValueMap({
-            " ": 0,
+            LetterValueMap.BLANK: 0,
             'A': 1,
             'B': 3,
             'C': 3,
@@ -20,7 +20,7 @@ class TestLetterValueMap(unittest.TestCase):
         self.assertEqual(len(self.sample_lvm1.BLANK), 1)
 
     def test_all_letters_contained(self):
-        self.assertEqual({" ", 'A', 'B', 'C', 'D', 'E'}, set(self.sample_lvm1.all_letters()))
+        self.assertEqual({LetterValueMap.BLANK, 'A', 'B', 'C', 'D', 'E'}, set(self.sample_lvm1.all_letters()))
 
     def test_get_letter_value_with_present_letter(self):
         self.assertEqual(self.sample_lvm1.get_letter_value('A'), 1)

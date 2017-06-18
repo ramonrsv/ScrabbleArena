@@ -3,7 +3,7 @@
 class LetterValueMap:
     """Contains a map of all Letters and their respective values, as well as the globally used BLANK constant"""
     BLANK = " "
-    # TODO: Because __set__ nor __del__ are NOT called when accessing attribute via class, all attempts at making
+    # TODO: Because __set__ or __del__ are NOT called when accessing attribute via class, all attempts at making
     # TODO: a const class attribute have fail. Find a way, and write Unit Test!
 
     def __init__(self, letter_value_dict):

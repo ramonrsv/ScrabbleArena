@@ -1,5 +1,5 @@
 import unittest
-from ..dimension_and_coordinate import Coordinate, Dimension
+from lib.dimension_and_coordinate import Coordinate, Dimension
 
 
 class TestCoordinate(unittest.TestCase):

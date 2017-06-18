@@ -10,11 +10,12 @@ path = os.path.dirname(sys.modules[__name__].__file__)
 path = os.path.join(path, '..')
 sys.path.insert(0, path)
 
-all_unit_test_scripts = ['test_board',
+all_unit_test_scripts = [#'test_board',
+                         'test_dimension_and_coordinate',
+                         'test_game_types',
+                         'test_letter_value_map',
                          'test_position',
-                         'test_tile',
-                         'test_settings',
-                         'test_dimension_and_coordinate']
+                         'test_tile_bag']
 
 if not params or params[0] in ['all', 'All', 'ALL']:
     params = all_unit_test_scripts

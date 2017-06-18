@@ -1,6 +1,6 @@
 from enum import Enum
 from abc import ABCMeta, abstractmethod
-from .dimension_and_coordinate import Coordinate
+from lib.dimension_and_coordinate import Coordinate
 
 
 class PositionProperty(Enum):

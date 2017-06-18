@@ -152,59 +152,73 @@ class TestTileBag(unittest.TestCase):
             rem -= rand_take
 
 
-# class TestTile(unittest.TestCase):
-#     @classmethod
-#     def setUpClass(cls):
-#         cls.sample_lvm = LetterValueMap({LetterValueMap.BLANK: 0, 'A': 1, 'B': 3, 'C': 3})
-#         cls.sample_tbd = TileBagDistribution(cls.sample_lvm, {LetterValueMap.BLANK: 4, 'A': 1, 'B': 2, 'C': 3})
-#         cls.sample_tb = TileBag(cls.sample_tbd)
-#
-#     def test_simple_construction(self):
-#         ta = Tile('A')
-#         tz = Tile('Z')
-#         self.assertEqual(ta.letter, 'A')
-#         self.assertEqual(tz.letter, 'Z')
-#         self.assertEqual(ta.value, 1)
-#         self.assertEqual(tz.value, 10)
-#         self.assertFalse(ta.is_blank())
-#         self.assertFalse(tz.is_blank())
-#
-#     def test_simple_letter_reassignment(self):
-#         t = Tile('A')
-#         self.assertEqual(t.letter, 'A')
-#         self.assertEqual(t.value, 1)
-#         t.letter = 'B'
-#         self.assertEqual(t.letter, 'B')
-#         self.assertEqual(t.value, 3)
-#
-#     def test_blank_tile_default_letter(self):
-#         bt = Tile.blank_tile()
-#         self.assertTrue(bt.isblank())
-#         self.assertEqual(bt.letter, Tile.BLANK)
-#         self.assertEqual(bt.value, 0)
-#
-#     def test_blank_tile_other_letter(self):
-#         bt = Tile.blank_tile('A')
-#         self.assertTrue(bt.isblank())
-#         self.assertEqual(bt.letter, 'A')
-#         self.assertEqual(bt.value, 0)
-#
-#     def test_blank_tile_letter_change(self):
-#         bt = Tile.blank_tile('A')
-#         self.assertTrue(bt.isblank())
-#         self.assertEqual(bt.letter, 'A')
-#         self.assertEqual(bt.value, 0)
-#         bt.letter = 'B'
-#         self.assertTrue(bt.isblank())
-#         self.assertEqual(bt.letter, 'B')
-#         self.assertEqual(bt.value, 0)
-#         bt.letter = Tile.BLANK
-#         self.assertTrue(bt.isblank())
-#         self.assertEqual(bt.letter, Tile.BLANK)
-#         self.assertEqual(bt.value, 0)
-#
-#     def test_get_letter_distribution(self):
-#         self.assertEqual(Tile.get_letter_distribution(), English_classic_letter_distribution.letters)
+class TestTile(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.sample_lvm = LetterValueMap({LetterValueMap.BLANK: 0, 'A': 1, 'B': 3, 'C': 3})
+        cls.sample_tbd = TileBagDistribution(cls.sample_lvm, {LetterValueMap.BLANK: 4, 'A': 1, 'B': 2, 'C': 3})
+        cls.sample_tb = TileBag(cls.sample_tbd)
+
+    def test_simple_construction(self):
+        ta = Tile('A')
+        tz = Tile('Z')
+        self.assertEqual(ta.letter, 'A')
+        self.assertEqual(tz.letter, 'Z')
+        self.assertFalse(ta.is_blank())
+        self.assertFalse(tz.is_blank())
+        self.assertFalse(ta.has_bag())
+        self.assertFalse(tz.has_bag())
+
+    def test_blank_tile_construction_with_letter(self):
+        tile = Tile.blank_tile('A')
+        self.assertEqual(tile.letter, 'A')
+        self.assertTrue(tile.is_blank())
+        self.assertFalse(tile.has_bag())
+
+    def test_blank_tile_construction_without_letter(self):
+        tile = Tile.blank_tile()
+        self.assertEqual(tile.letter, Tile.DEFAULT_BLANK_LETTER)
+        self.assertTrue(tile.is_blank())
+        self.assertFalse(tile.has_bag())
+
+    def test_blank_tile_letter_reassignment(self):
+        tile = Tile.blank_tile('A')
+        self.assertEqual(tile.letter, 'A')
+        tile.letter = 'B'
+        self.assertEqual(tile.letter, 'B')
+        tile.letter = Tile.DEFAULT_BLANK_LETTER
+        self.assertEqual(tile.letter, Tile.DEFAULT_BLANK_LETTER)
+
+    def test_failing_letter_reassignment(self):
+        tile = Tile('A')
+        try:
+            tile.letter = 'B'
+            self.fail("Reassigning non-blank letter did not raise a RuntimeError")
+        except RuntimeError:
+            pass
+
+    def test_simple_creation_with_tile_bag(self):
+        tile = Tile('A', tile_bag=self.sample_tb)
+        self.assertEqual(tile.letter, 'A')
+        self.assertFalse(tile.is_blank())
+        self.assertTrue(tile.has_bag())
+        self.assertIsInstance(tile.bag(), TileBag)
+
+    def test_value_frequency_from_tile_bag(self):
+        tile = Tile('B', tile_bag=self.sample_tb)
+        self.assertEqual(tile.value, 3)
+        self.assertEqual(tile.frequency, 2)
+
+    def test_construction_with_invalid_letter_and_tile_bag(self):
+        self.assertRaises(AssertionError, lambda: Tile('Z', tile_bag=self.sample_tb))
+
+    def test_blank_tile_reassignment_with_invalid_letter(self):
+        tile = Tile.blank_tile('B', tile_bag=self.sample_tb)
+        try:
+            tile.letter = 'Z'
+            self.fail("Setting invalid letter to a Tile with a tile_bag did not raise an AssertionError")
+        except ValueError:
+            pass
 
 
 if __name__ == "__main__":

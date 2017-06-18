@@ -1,10 +1,12 @@
 import copy
 import time
 import random
-from .letter_value_map import LetterValueMap
+from lib.letter_value_map import LetterValueMap
 
 
 class Tile:
+    DEFAULT_BLANK_LETTER = " "
+
     def __init__(self, letter, isblank=False, tile_bag=None):
         # If a reference to a tile_bag is provided some functionality in a TileBag can be accessed directly through the
         # Tile (get_letter_value, get_letter_frequency, etc.), as well as additional error checking.
@@ -21,7 +23,7 @@ class Tile:
     def blank_tile(cls, letter=None, tile_bag=None):
         """Permits a more intuitive initialization of a blank tile:
         tile = Tile.blank_tile(), tile = Tile.blank_tile('A'), or tile = Tile.blank_tile(BLANK)"""
-        return cls(letter, isblank=True, tile_bag=tile_bag)
+        return cls(letter if letter is not None else cls.DEFAULT_BLANK_LETTER, isblank=True, tile_bag=tile_bag)
 
     def is_blank(self):
         return self._isblank
@@ -132,7 +134,8 @@ class TileBag(TileBagDistribution):
             "invalid value: " + str(n) + " - only " + str(self.remaining(letter)) + " tiles of '" + letter + "' left"
 
         self._tiles_left[letter] -= n
-        return [self._factory_make_tile(letter, is_blank=True if letter == self.BLANK else False) for _ in range(n)]
+        return [self._factory_make_tile(letter, is_blank=True if letter == self.BLANK else False, tile_bag=self)
+                for _ in range(n)]
 
     def _take_random(self, n):
         """Return a list of n random Tiles"""
@@ -159,5 +162,5 @@ class TileBag(TileBagDistribution):
             self.put_back(tile)
 
     @classmethod
-    def _factory_make_tile(cls, letter, is_blank):
-        return Tile(letter, is_blank)
+    def _factory_make_tile(cls, letter, is_blank, tile_bag):
+        return Tile(letter, is_blank, tile_bag)

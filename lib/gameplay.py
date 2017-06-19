@@ -1,6 +1,6 @@
-from .position import PosProperty, Position
-from .board import BoardContainer
-from .tile import Tile
+from .position import Position, ClassicPositionProperty as PosProperty
+from .board import Board
+from .tile_bag import Tile
 
 
 class PlayError(RuntimeError):
@@ -12,12 +12,12 @@ class GameplayPosition(Position):
         Position.__init__(self, x, y, pos_property)
 
 
-class GameplayBoard(BoardContainer):
+class GameplayBoard(Board):
     def __init__(self, board_configuration):
-        BoardContainer.__init__(self, board_configuration)
+        Board.__init__(self, board_configuration)
 
     def _create_position_object(self, position):
-        """Overloading BoardContainer definition to return GameplayPosition instead"""
+        """Overloading Board definition to return GameplayPosition instead"""
         return GameplayPosition(position.x, position.y, position.property)
 
 

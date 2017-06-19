@@ -1,6 +1,6 @@
 from .board_ui import UiBoardPosition
 from .board_ui import UiBoard, UiTileTray
-from .tile import Tile, TileBag
+from .tile_bag import Tile, TileBag
 
 
 class GameController:
@@ -26,12 +26,10 @@ class GameController:
             self.setup_new_game(tile_distribution, board_configuration, tray_size)
 
     def setup_new_game(self, tile_distribution, board_configuration, tray_size):
-        self._letter_distribution = tile_distribution.letter_distribution
         self._tile_distribution = tile_distribution
         self._board_configuration = board_configuration
         self._tray_size = tray_size
 
-        Tile.set_letter_distribution(self._letter_distribution)
         self._tile_bag = TileBag(self._tile_distribution)
 
         self._create_new_board()
@@ -50,7 +48,7 @@ class GameController:
         if old_tray:
             old_tray.hide()
         return UiTileTray(player_ui_tray_widget,
-                          self._tile_bag.take(self._tray_size), self._tray_size, self)
+                          self._tile_bag.take_multiple(self._tray_size), self._tray_size, self)
 
     def show(self):
         for obj in [self._ui_board, self._player1_ui_tray, self._player2_ui_tray]:

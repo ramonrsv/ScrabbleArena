@@ -1,12 +1,13 @@
-from .settings import Words_with_friends_board_configuration, Words_with_friends_fast_play_board_configuration
-from .settings import English_classic_100_tile_distribution, Standard_player_tray_size
+from .game_types.board_configurations import \
+    Words_with_friends_board_configuration, Words_with_friends_fast_play_board_configuration
+from .game_types.tile_bag_distributions import English_classic_100_tbd
 from .game_controller import GameController
 
 
 class UiManager:
-    _default_tile_distribution = English_classic_100_tile_distribution
+    _default_tile_distribution = English_classic_100_tbd
     _default_board_configuration = Words_with_friends_board_configuration
-    _default_tray_size = Standard_player_tray_size
+    _default_tray_size = 10  # TODO: Define this somewhere
 
     def __init__(self, ui_main_window):
         self._ui_main_window = ui_main_window

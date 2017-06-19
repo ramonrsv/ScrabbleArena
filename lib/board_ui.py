@@ -2,9 +2,9 @@ from PyQt5 import QtCore, QtGui
 from PyQt5.QtWidgets import QWidget, QLabel, QPushButton
 from PyQt5.QtCore import QMimeData, Qt
 from PyQt5.QtGui import QDrag
-from .position import PosProperty
+from .position import ClassicPositionProperty as PosProperty
 from .gameplay import GameplayPosition, GameplayBoard, TileTray
-from .tile import Tile
+from .tile_bag import Tile
 
 
 class UiTile(Tile, QPushButton):
@@ -17,13 +17,13 @@ class UiTile(Tile, QPushButton):
             QPushButton.__init__(self, parent)
         else:
             QPushButton.__init__(self)
-        Tile.__init__(self, tile.letter, tile.isblank())  # TODO: not really elegant
+        Tile.__init__(self, tile.letter, tile.is_blank())  # TODO: not really elegant
         self._set_display_properties()
 
     def _set_display_properties(self):
         self.setFixedWidth(self.width)
         self.setFixedHeight(self.height)
-        self.setText(self.letter if not self.isblank() else '')
+        self.setText(self.letter if not self.is_blank() else '')
         font = QtGui.QFont()
         font.setFamily("Helvetica")
         font.setBold(True)

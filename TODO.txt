@@ -1,8 +1,25 @@
-________________________________________________________________________________________________________________________
 Pending implementations - priority [1,5] _______________________________________________________________________________
 ------------------------------------------------------------------------------------------------------------------------
+[1] Refactoring and rework of board, board_ui, game_controller, gameplay, and main_manager_ui are still pending.
+Re-visit design decisions as many of the lower-level structures (tile_bag, etc.) have changed, offering better and
+cleaner interfaces and functionality.
+
+Approach these in the same manner, aiming for clean structures and interfaces. The hierarchy is approximately as below:
+board -> board_ui / gameplay -> game_controller  -> main_manager_ui
+
+- Find a convention for UI related sections of code, and define what UI related means.
+- board probably requires only minor changes
+- board_ui should get a more significant rework (gameplay should probably disappear altogether)
+
 [] Add name parameter to configurations (will probably be used for UI purposes later on)
 
-________________________________________________________________________________________________________________________
+
 Known bugs/issues - priority [1,5] _____________________________________________________________________________________
 ------------------------------------------------------------------------------------------------------------------------
+
+
+Completed Tasks ________________________________________________________________________________________________________
+------------------------------------------------------------------------------------------------------------------------
+
+[] Refactoring and rework of dimension_and_coordinate, position, letter_value_map, tile_bag, game_type completed, along
+with associated Unit Tests

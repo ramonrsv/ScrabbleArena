@@ -1,8 +1,8 @@
-from .position import Position
-from .dimension_and_coordinate import Dimension
+from lib.position import Position
+from lib.dimension_and_coordinate import Dimension, Coordinate
 
 
-class BoardContainer(Dimension):
+class Board(Dimension):
     def __init__(self, board_configuration):
         Dimension.__init__(self, board_configuration.width, board_configuration.height)
         self.__config = board_configuration
@@ -32,7 +32,7 @@ class BoardContainer(Dimension):
 
     def get_position(self, coo):
         """Retrieve a position from a coordinate tuple (x,y)"""
-        return self.__positions.get(Position(coo[0], coo[1]).coo, None)  # Accept ('A',1) form, helped by Position
+        return self.__positions.get(Coordinate(coo[0], coo[1]).coo, None)  # Accept ('A',1) form, helped by Position
 
 
 class BoardConfiguration(Dimension):

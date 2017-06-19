@@ -54,23 +54,6 @@ class PositionProperty(Enum):
         return ret
 
 
-class Position(Coordinate):
-    def __init__(self, x, y, pos_property):
-        Coordinate.__init__(self, x, y)
-        self.__property = pos_property
-        self.property = pos_property
-
-    @property
-    def property(self):
-        return self.__property
-
-    @property.setter
-    def property(self, pos_property):
-        if not isinstance(pos_property, PositionProperty):
-            raise TypeError("invalid type: " + str(type(pos_property)) + " - is not " + str(type(PositionProperty)))
-        self.__property = pos_property
-
-
 class ClassicPositionProperty(PositionProperty):
     normal = 0
     CENTER = 1
@@ -95,3 +78,20 @@ class ClassicPositionProperty(PositionProperty):
         return cls._get_full_word_multiplier_dict(
             {cls.DW: 2, cls.TW: 3,
              cls.W2: 2, cls.W3: 3, cls.W4: 4}, default_value=1)
+
+
+class Position(Coordinate):
+    def __init__(self, x, y, pos_property=ClassicPositionProperty.normal):
+        Coordinate.__init__(self, x, y)
+        self.__property = pos_property
+        self.property = pos_property
+
+    @property
+    def property(self):
+        return self.__property
+
+    @property.setter
+    def property(self, pos_property):
+        if not isinstance(pos_property, PositionProperty):
+            raise TypeError("invalid type: " + str(type(pos_property)) + " - is not " + str(type(PositionProperty)))
+        self.__property = pos_property

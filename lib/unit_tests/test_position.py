@@ -1,6 +1,7 @@
 import unittest
 from lib.position import PositionAttribute, Position
 from lib.position import ClassicPositionAttribute
+from lib.tile_bag import Tile
 
 
 class TestPositionAttributeUsingClassicPosition(unittest.TestCase):
@@ -91,6 +92,49 @@ class TestPosition(unittest.TestCase):
         pos.attribute = ClassicPositionAttribute.DL
         self.assertEqual(pos.attribute, ClassicPositionAttribute.DL)
 
+    def test_has_tile(self):
+        pos = Position(1, 1)
+        self.assertFalse(pos.has_tile())
+
+    def test_tile_setter(self):
+        pos = Position(1, 1)
+        self.assertFalse(pos.has_tile())
+        pos.tile = Tile('A')
+        self.assertTrue(pos.has_tile())
+        self.assertIsInstance(pos.tile, Tile)
+
+    def test_set_tile(self):
+        pos = Position(1, 1)
+        self.assertFalse(pos.has_tile())
+        pos.set_tile(Tile('A'))
+        self.assertTrue(pos.has_tile())
+        self.assertIsInstance(pos.tile, Tile)
+
+    def test_remove_tile(self):
+        pos = Position(1, 1)
+        self.assertFalse(pos.has_tile())
+        pos.tile = Tile('A')
+        self.assertTrue(pos.has_tile())
+        self.assertIsInstance(pos.tile, Tile)
+        pos.remove_tile()
+        self.assertFalse(pos.has_tile())
+
+    def test_bad_tile_getting(self):
+        pos = Position(1, 1)
+        self.assertRaises(RuntimeError, lambda: pos.tile)
+
+    def test_bad_tile_setting_bad_type(self):
+        pos = Position(1, 1)
+        self.assertRaises(TypeError, lambda: pos.set_tile('A'))
+
+    def test_bad_tile_setting_already_has_tile(self):
+        pos = Position(1, 1)
+        pos.tile = Tile('A')
+        self.assertRaises(RuntimeError, lambda: pos.set_tile(Tile('A')))
+
+    def test_bad_remove_tile(self):
+        pos = Position(1, 1)
+        self.assertRaises(RuntimeError, lambda: pos.remove_tile())
 
 if __name__ == "__main__":
     unittest.main()

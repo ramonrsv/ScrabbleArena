@@ -1,6 +1,7 @@
 from enum import Enum
 from abc import ABCMeta, abstractmethod
 from lib.dimension_and_coordinate import Coordinate
+from lib.tile_bag import Tile
 
 
 class PositionAttribute(Enum):
@@ -85,6 +86,7 @@ class Position(Coordinate):
         Coordinate.__init__(self, x, y)
         self.__attribute = pos_attribute
         self.attribute = pos_attribute
+        self.__tile = None
 
     @property
     def attribute(self):
@@ -95,3 +97,28 @@ class Position(Coordinate):
         if not isinstance(pos_attribute, PositionAttribute):
             raise TypeError("invalid type: " + str(type(pos_attribute)) + " - is not " + str(type(PositionAttribute)))
         self.__attribute = pos_attribute
+
+    @property
+    def tile(self):
+        if not self.has_tile():
+            raise RuntimeError("position does not currently have a tile")
+        return self.__tile
+
+    @tile.setter
+    def tile(self, tile):
+        if not isinstance(tile, Tile):
+            raise TypeError("tile has to be a Tile object")
+        if self.__tile:
+            raise RuntimeError("position already has a tile object")
+        self.__tile = tile
+
+    def has_tile(self):
+        return True if self.__tile is not None else False
+
+    def set_tile(self, tile):
+        self.tile = tile
+
+    def remove_tile(self):
+        if not self.has_tile():
+            raise RuntimeError("position does not currently have a tile")
+        self.__tile = None

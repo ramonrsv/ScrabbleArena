@@ -1,6 +1,6 @@
 import unittest
 from lib.game_types.board_configurations import Words_with_friends_board_configuration
-from lib.position import Position, ClassicPositionProperty
+from lib.position import Position, ClassicPositionAttribute
 from lib.board import Board, BoardConfiguration
 
 
@@ -18,7 +18,7 @@ class TestBoard(unittest.TestCase):
         center = bc.get_position((8, 8))
         self.assertIsInstance(center, Position)
         self.assertEqual(center.coo, (8, 8))
-        self.assertEqual(center.property, ClassicPositionProperty.CENTER)
+        self.assertEqual(center.attribute, ClassicPositionAttribute.CENTER)
 
     def test_get_position_alpha(self):
         bc = Board(Words_with_friends_board_configuration)
@@ -26,15 +26,15 @@ class TestBoard(unittest.TestCase):
         self.assertIsInstance(d2, Position)
         self.assertEqual(d2.coo, (4, 1))
         self.assertEqual(d2.coo_alpha, ('D', 1))
-        self.assertEqual(d2.property, ClassicPositionProperty.W3)
+        self.assertEqual(d2.attribute, ClassicPositionAttribute.W3)
 
 
 class TestBoardConfiguration(unittest.TestCase):
     def setUp(self):
-        self.special_positions_1 = [Position(1, 1, ClassicPositionProperty.DL),
-                                    Position(2, 2, ClassicPositionProperty.TL)]
-        self.special_positions_2 = [Position(4, 4, ClassicPositionProperty.TW),
-                                    Position(5, 5, ClassicPositionProperty.W4)]
+        self.special_positions_1 = [Position(1, 1, ClassicPositionAttribute.DL),
+                                    Position(2, 2, ClassicPositionAttribute.TL)]
+        self.special_positions_2 = [Position(4, 4, ClassicPositionAttribute.TW),
+                                    Position(5, 5, ClassicPositionAttribute.W4)]
         self.special_positions_3 = [Position(1, 1), Position(3, 1), Position(1, 3), Position(3, 3)]
         self.special_positions_3_corner_symmetry = [Position(1, 1), Position(3, 1), Position(1, 3), Position(3, 3),
                                                     Position(5, 1), Position(5, 3),

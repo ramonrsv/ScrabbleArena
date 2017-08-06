@@ -10,19 +10,18 @@ class Board(Dimension):
         self.__coo_list = list(self.__positions.keys())
         self.__coo_list.sort()
 
-    def _create_position_object(self, position):
-        """Can be overloaded to create a different type of Position object (which should inherit from Position)"""
-        return Position(position.x, position.y, position.property)
+    def _factory_make_position(self, position):
+        return Position(position.x, position.y, position.attribute)
 
     def _make_all_positions_dict(self, board_configuration):
         """Make a (x,y): Position dictionary of all the special positions, and fill in the rest"""
         ret = {}
         for pos in board_configuration.special_positions:
-            ret[pos.coo] = self._create_position_object(pos)
+            ret[pos.coo] = self._factory_make_position(pos)
         for y in range(1, board_configuration.height + 1):
             for x in range(1, board_configuration.width + 1):
                 if (x, y) not in ret:
-                    ret[(x, y)] = self._create_position_object(Position(x, y))
+                    ret[(x, y)] = self._factory_make_position(Position(x, y))
         return ret
 
     def positions(self):
@@ -67,7 +66,7 @@ class BoardConfiguration(Dimension):
     def _mirror_position(pos, direction, width, height):
         assert direction in ['x', 'y'], "bad direction '" + str(direction) + "'"  # TODO: Implement diagonal direction
         ret = Position(width - pos.x + 1 if direction == 'x' else pos.x,
-                       height - pos.y + 1 if direction == 'y' else pos.y, pos.property)
+                       height - pos.y + 1 if direction == 'y' else pos.y, pos.attribute)
         return ret if ret != pos else None
 
     @classmethod

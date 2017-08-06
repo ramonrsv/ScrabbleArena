@@ -2,7 +2,7 @@ from PyQt5 import QtCore, QtGui
 from PyQt5.QtWidgets import QWidget, QLabel, QPushButton
 from PyQt5.QtCore import QMimeData, Qt
 from PyQt5.QtGui import QDrag
-from .position import ClassicPositionProperty as PosProperty
+from .position import ClassicPositionAttribute as PosAttribute
 from .gameplay import GameplayPosition, GameplayBoard, TileTray
 from .tile_bag import Tile
 
@@ -123,16 +123,16 @@ class UiTrayPosition(UiBasicPosition):
 
 class UiBoardPosition(GameplayPosition, UiBasicPosition):
     __pos_type_color = {
-        PosProperty.normal: QtGui.QColor(192, 192, 192),
-        PosProperty.CENTER: QtGui.QColor(81, 0, 102),
-        PosProperty.L2: QtGui.QColor(0, 102, 204),
-        PosProperty.L3: QtGui.QColor(0, 204, 0),
-        PosProperty.W2: QtGui.QColor(255, 51, 51),
-        PosProperty.W3: QtGui.QColor(255, 128, 0)}
+        PosAttribute.normal: QtGui.QColor(192, 192, 192),
+        PosAttribute.CENTER: QtGui.QColor(81, 0, 102),
+        PosAttribute.L2: QtGui.QColor(0, 102, 204),
+        PosAttribute.L3: QtGui.QColor(0, 204, 0),
+        PosAttribute.W2: QtGui.QColor(255, 51, 51),
+        PosAttribute.W3: QtGui.QColor(255, 128, 0)}
 
-    def __init__(self, parent, controller, geometry, x, y, pos_property=PosProperty.normal):
-        GameplayPosition.__init__(self, x, y, pos_property)
-        UiBasicPosition.__init__(self, parent, controller, geometry, self.__pos_type_color[self.property])
+    def __init__(self, parent, controller, geometry, x, y, pos_attribute=PosAttribute.normal):
+        GameplayPosition.__init__(self, x, y, pos_attribute)
+        UiBasicPosition.__init__(self, parent, controller, geometry, self.__pos_type_color[self.attribute])
 
 
 class UiTileTray(TileTray):
@@ -186,9 +186,9 @@ class UiBoard(GameplayBoard):
         self._y_labels = []
         self._set_display_properties()
 
-    def _create_position_object(self, position):
+    def _factory_make_position(self, position):
         return UiBoardPosition(self._main_board_widget, self.controller,
-                               self._pos_geometry(position), position.x, position.y, position.property)
+                               self._pos_geometry(position), position.x, position.y, position.attribute)
 
     def _pos_geometry(self, pos):
         """Will return the geometry of a UiPosition based on board_container (Board) and ui_parent (QWidget)"""

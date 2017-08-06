@@ -3,7 +3,7 @@ from abc import ABCMeta, abstractmethod
 from lib.dimension_and_coordinate import Coordinate
 
 
-class PositionProperty(Enum):
+class PositionAttribute(Enum):
     """This is an Interface class. Any subclass must define all the 'Enums' and the abstract methods"""
     __metaclass__ = ABCMeta
 
@@ -54,7 +54,7 @@ class PositionProperty(Enum):
         return ret
 
 
-class ClassicPositionProperty(PositionProperty):
+class ClassicPositionAttribute(PositionAttribute):
     normal = 0
     CENTER = 1
     DL = 2
@@ -81,17 +81,17 @@ class ClassicPositionProperty(PositionProperty):
 
 
 class Position(Coordinate):
-    def __init__(self, x, y, pos_property=ClassicPositionProperty.normal):
+    def __init__(self, x, y, pos_attribute=ClassicPositionAttribute.normal):
         Coordinate.__init__(self, x, y)
-        self.__property = pos_property
-        self.property = pos_property
+        self.__attribute = pos_attribute
+        self.attribute = pos_attribute
 
     @property
-    def property(self):
-        return self.__property
+    def attribute(self):
+        return self.__attribute
 
-    @property.setter
-    def property(self, pos_property):
-        if not isinstance(pos_property, PositionProperty):
-            raise TypeError("invalid type: " + str(type(pos_property)) + " - is not " + str(type(PositionProperty)))
-        self.__property = pos_property
+    @attribute.setter
+    def attribute(self, pos_attribute):
+        if not isinstance(pos_attribute, PositionAttribute):
+            raise TypeError("invalid type: " + str(type(pos_attribute)) + " - is not " + str(type(PositionAttribute)))
+        self.__attribute = pos_attribute

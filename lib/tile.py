@@ -2,6 +2,7 @@ import copy
 import time
 import random
 from lib.letter_value_map import LetterValueMap
+from lib.dimension_and_coordinate import Dimension
 
 
 class Tile:
@@ -164,3 +165,41 @@ class TileBag(TileBagDistribution):
     @classmethod
     def _factory_make_tile(cls, letter, is_blank, tile_bag):
         return Tile(letter, is_blank, tile_bag)
+
+
+class TileTray(Dimension):
+    def __init__(self, size, tiles=None):
+        assert isinstance(size, int) and size > 0, "size must be a positive integer"
+        Dimension.__init__(self, height=1, width=size)
+
+        if tiles is not None:
+            assert isinstance(tiles, list) and len(tiles) > 0 and isinstance(tiles[0], Tile), \
+                "tiles must be a non-empty list of Tiles"
+            assert len(tiles) <= self.size(), "list of tiles must not be greater than the tray size"
+            self._tiles = tiles
+        else:
+            self._tiles = []
+
+    def size(self):
+        return self.width
+
+    def tiles(self):
+        return self._tiles
+
+    def remaining(self):
+        return len(self._tiles)
+
+    def take(self, tile):
+        if self.remaining() == 0:
+            raise RuntimeError("there are no tiles in the list of tiles")
+        if tile not in self._tiles:
+            raise RuntimeError("tile not found in list of tiles")
+        return self._tiles.pop(self._tiles.index(tile))
+
+    def put(self, tile):
+        self.put_back(tile)
+
+    def put_back(self, tile):
+        if self.remaining() == self.size():
+            raise RuntimeError("TileTray is full")
+        self._tiles.append(tile)

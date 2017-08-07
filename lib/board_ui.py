@@ -3,8 +3,8 @@ from PyQt5.QtWidgets import QWidget, QLabel, QPushButton
 from PyQt5.QtCore import QMimeData, Qt
 from PyQt5.QtGui import QDrag
 from .position import Position, ClassicPositionAttribute as PosAttribute
-from .gameplay import GameplayPosition, GameplayBoard, TileTray
-from .tile_bag import Tile
+from .tile import Tile, TileTray
+from .board import Board
 
 
 class UiTile(Tile, QPushButton):
@@ -47,11 +47,11 @@ class UiTile(Tile, QPushButton):
         drag.exec_(Qt.MoveAction)
 
 
-class UiBasicPosition(GameplayPosition, QWidget):
+class UiBasicPosition(Position, QWidget):
     __default_color = QtGui.QColor(192, 192, 192)
 
     def __init__(self, parent, controller, geometry, x, y, pos_attribute=PosAttribute.normal, color=__default_color):
-        GameplayPosition.__init__(self, x, y, pos_attribute)
+        Position.__init__(self, x, y, pos_attribute)
         QWidget.__init__(self, parent)
         self.setAcceptDrops(True)  # Allow drag and drop
         self.controller = controller  # Allow callbacks to controller object on drag and drop
@@ -83,7 +83,7 @@ class UiBasicPosition(GameplayPosition, QWidget):
             self.tile.hide()
 
     def set_tile(self, tile):
-        GameplayPosition.set_tile(self, tile)
+        Position.set_tile(self, tile)
         self.tile.setParent(self)
         self.tile.move(self.rect().center() - self.tile.rect().center())  # Center tile in space
         self.tile.parent = self  # Parent UiPosition used for determining 'from' in move events
@@ -121,17 +121,17 @@ class UiTileTray(TileTray):
     _pos_spacing = 2
 
     def __init__(self, widget, tiles, size, controller):
-        TileTray.__init__(self, [UiTile(tile) for tile in tiles], size)
+        TileTray.__init__(self, size, [UiTile(tile) for tile in tiles])
         self._widget = widget
         self._controller = controller
         self._positions = self._generate_positions(self._widget, self._controller)
-        for i in range(len(self.tiles)):
-            self._positions[i].set_tile(self.tiles[i])
+        for i in range(len(self.tiles())):
+            self._positions[i].set_tile(self.tiles()[i])
 
     def _generate_positions(self, widget, controller):  # Needs TileTray to be initialized
         """Creates size UiPositions and sets their geometry"""
         temp_positions = []
-        for i in range(self.size):
+        for i in range(self.size()):
             temp_positions.append(
                 UiTrayPosition(parent=widget, controller=controller, tray_index=i + 1,
                                geometry=QtCore.QRect((self._pos_width + self._pos_spacing) * i, 0,
@@ -147,7 +147,7 @@ class UiTileTray(TileTray):
             pos.hide()
 
 
-class UiBoard(GameplayBoard):
+class UiBoard(Board):
     _pos_width = 35
     _pos_height = 35
     _pos_spacing = 2
@@ -159,7 +159,7 @@ class UiBoard(GameplayBoard):
         # main_board_widget and _controller in BoardPosition object construction, in GameplayBoard construction
         self.controller = controller
         self._main_board_widget = main_board_widget
-        GameplayBoard.__init__(self, board_configuration)
+        Board.__init__(self, board_configuration)
         self._x_label_widget = x_label_widget
         self._y_label_widget = y_label_widget
         self._x_labels = []

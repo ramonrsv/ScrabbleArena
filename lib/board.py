@@ -5,10 +5,10 @@ from lib.dimension_and_coordinate import Dimension, Coordinate
 class Board(Dimension):
     def __init__(self, board_configuration):
         Dimension.__init__(self, board_configuration.width, board_configuration.height)
-        self.__config = board_configuration
-        self.__positions = self._make_all_positions_dict(board_configuration)
-        self.__coo_list = list(self.__positions.keys())
-        self.__coo_list.sort()
+        self._config = board_configuration
+        self._positions = self._make_all_positions_dict(board_configuration)
+        self._coo_list = list(self._positions.keys())
+        self._coo_list.sort()
 
     def _factory_make_position(self, position):
         return Position(position.x, position.y, position.attribute)
@@ -26,12 +26,12 @@ class Board(Dimension):
 
     def positions(self):
         """Iterate over all positions"""
-        for coo in self.__coo_list:
-            yield self.__positions[coo]
+        for coo in self._coo_list:
+            yield self._positions[coo]
 
     def get_position(self, coo):
         """Retrieve a position from a coordinate tuple (x,y)"""
-        return self.__positions.get(Coordinate(coo[0], coo[1]).coo, None)  # Accept ('A',1) form, helped by Position
+        return self._positions.get(Coordinate(coo[0], coo[1]).coo, None)  # Accept ('A',1) form, helped by Position
 
 
 class BoardConfiguration(Dimension):

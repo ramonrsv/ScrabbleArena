@@ -1,7 +1,7 @@
 import unittest
 import random
 from lib.letter_value_map import LetterValueMap
-from lib.tile_bag import Tile, TileBagDistribution, TileBag
+from lib.tile import Tile, TileBagDistribution, TileBag, TileTray
 
 
 class TestTileBagDistribution(unittest.TestCase):
@@ -219,6 +219,46 @@ class TestTile(unittest.TestCase):
             self.fail("Setting invalid letter to a Tile with a tile_bag did not raise an AssertionError")
         except ValueError:
             pass
+
+
+class TestTileTray(unittest.TestCase):
+    def setUp(self):
+        self.tiles = [Tile('A'), Tile('B'), Tile.blank_tile(), Tile('C')]
+
+    def test_simple_construction(self):
+        tr = TileTray(10)
+        self.assertIsInstance(tr, TileTray)
+        self.assertEqual(10, tr.size())
+        self.assertEqual(0, tr.remaining())
+
+    def test_construction_with_tiles(self):
+        tr = TileTray(10, self.tiles)
+        self.assertIsInstance(tr, TileTray)
+        self.assertEqual(10, tr.size())
+        self.assertEqual(len(self.tiles), tr.remaining())
+
+    def test_tiles_list(self):
+        tr = TileTray(10, self.tiles)
+        self.assertEqual(len(self.tiles), len(tr.tiles()))
+        for tile in tr.tiles():
+            self.assertIsInstance(tile, Tile)
+            self.assertIn(tile, self.tiles)
+
+    def test_take(self):
+        tr = TileTray(10, self.tiles)
+        original_size = len(self.tiles)
+        tile = tr.take(tr.tiles()[2])
+        self.assertIsInstance(tile, Tile)
+        self.assertEqual(original_size - 1, tr.remaining())
+
+    def test_put_back(self):
+        tr = TileTray(10, self.tiles)
+        original_size = len(self.tiles)
+        tile = tr.take(tr.tiles()[2])
+        self.assertIsInstance(tile, Tile)
+        self.assertEqual(original_size - 1, tr.remaining())
+        tr.put_back(tile)
+        self.assertEqual(original_size, tr.remaining())
 
 
 if __name__ == "__main__":

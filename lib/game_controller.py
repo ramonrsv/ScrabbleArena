@@ -1,6 +1,6 @@
 from .board_ui import UiBoardPosition
 from .board_ui import UiBoard, UiTileTray
-from .tile_bag import Tile, TileBag
+from .tile import Tile, TileBag
 
 
 class GameController:

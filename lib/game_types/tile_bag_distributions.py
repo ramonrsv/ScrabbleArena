@@ -1,4 +1,4 @@
-from lib.tile_bag import TileBagDistribution
+from lib.tile import TileBagDistribution
 from .letter_value_maps import English_classic_lvm
 
 English_classic_100_tbd = TileBagDistribution(

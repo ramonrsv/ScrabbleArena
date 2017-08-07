@@ -1,7 +1,7 @@
 import unittest
 from lib.position import PositionAttribute, Position
 from lib.position import ClassicPositionAttribute
-from lib.tile_bag import Tile
+from lib.tile import Tile
 
 
 class TestPositionAttributeUsingClassicPosition(unittest.TestCase):

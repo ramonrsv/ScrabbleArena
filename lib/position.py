@@ -1,7 +1,7 @@
 from enum import Enum
 from abc import ABCMeta, abstractmethod
 from lib.dimension_and_coordinate import Coordinate
-from lib.tile_bag import Tile
+from lib.tile import Tile
 
 
 class PositionAttribute(Enum):

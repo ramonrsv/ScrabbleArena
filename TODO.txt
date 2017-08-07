@@ -1,15 +1,19 @@
 Pending implementations - priority [1,5] _______________________________________________________________________________
 ------------------------------------------------------------------------------------------------------------------------
-[1] Refactoring and rework of board, board_ui, game_controller, gameplay, and main_manager_ui are still pending.
-Re-visit design decisions as many of the lower-level structures (tile_bag, etc.) have changed, offering better and
-cleaner interfaces and functionality.
+[] Create a generalized controller, which internally has two ways for I/O, the GUI and CLI. At first it could be either
+or, but eventually they should be able to work concurrently. The controller should also have an interface for AI to use.
 
-Approach these in the same manner, aiming for clean structures and interfaces. The hierarchy is approximately as below:
-board -> board_ui / gameplay -> game_controller  -> main_manager_ui
+By IO, input would be, for instance, to make a play, to move a tile from a tile tray to the board, etc. and output would
+be to show the play on the board, or to output an ASCII board, etc. ALSO, it would include game configurations options,
+like changing the game mode, changing the players (AI or human), stopping a game, starting a game, playing multiple ones.
+-> This should probably be two different controllers, one for game operations (e.g. move tile, make play, etc.), and one
+for game configurations (stop/start game, change mode, change players, etc.)
 
-- Find a convention for UI related sections of code, and define what UI related means.
-- board probably requires only minor changes
-- board_ui should get a more significant rework (gameplay should probably disappear altogether)
+[] GUI has been refactored to lib/gui. The program should be able to operate independently of the GUI, which would be
+optional and a second way to give input/output for plays and game state.
+
+Qt should be encapsulated to make coding with it simpler and less error prone. It should also be fully contained within
+/lib/gui and the GUI components (to the point that it doesn't have to be installed if the GUI isn't started).
 
 [] Add name parameter to configurations (will probably be used for UI purposes later on)
 
@@ -20,6 +24,16 @@ Known bugs/issues - priority [1,5] _____________________________________________
 
 Completed Tasks ________________________________________________________________________________________________________
 ------------------------------------------------------------------------------------------------------------------------
+[1] Refactoring and rework of board, board_ui, game_controller, gameplay, and main_manager_ui are still pending.
+Re-visit design decisions as many of the lower-level structures (tile_bag, etc.) have changed, offering better and
+cleaner interfaces and functionality.
+
+Approach these in the same manner, aiming for clean structures and interfaces. The hierarchy is approximately as below:
+board -> board_ui / gameplay -> game_controller  -> main_manager_ui
+
+- Find a convention for UI related sections of code, and define what UI related means.
+- board probably requires only minor changes
+- board_ui should get a more significant rework (gameplay should probably disappear altogether)
 
 [] Refactoring and rework of dimension_and_coordinate, position, letter_value_map, tile_bag, game_type completed, along
 with associated Unit Tests

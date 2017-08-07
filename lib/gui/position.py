@@ -43,4 +43,4 @@ class GUIPosition(Position, QWidget):
         Position.set_tile(self, tile)
         self.tile.setParent(self)
         self.tile.move(self.rect().center() - self.tile.rect().center())  # Center tile in space
-        self.tile.parent = self  # Parent UiPosition used for determining 'from' in move events
+        self.tile.parent = self

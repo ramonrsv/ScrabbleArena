@@ -10,33 +10,31 @@ from lib.tile import Tile, TileTray
 class GUITile(Tile, QPushButton):
     _width = 31
     _height = 31
+
+    _default_stylesheet_background_color = "background-color: yellow"
+
     _font_point_size = 18
 
     def __init__(self, tile, parent=None):
+        Tile.__init__(self, tile.letter, tile.is_blank())  # TODO: not really elegant
         if parent:
             QPushButton.__init__(self, parent)
         else:
             QPushButton.__init__(self)
-        Tile.__init__(self, tile.letter, tile.is_blank())  # TODO: not really elegant
         self._set_display_properties()
 
     def _set_display_properties(self):
-        self.setFixedWidth(self.width)
-        self.setFixedHeight(self.height)
+        self.setFixedWidth(self._width)
+        self.setFixedHeight(self._height)
+
+        self.setStyleSheet(self._default_stylesheet_background_color)
+
         self.setText(self.letter if not self.is_blank() else '')
         font = QtGui.QFont()
         font.setFamily("Helvetica")
         font.setBold(True)
         font.setPointSize(self._font_point_size)
         self.setFont(font)
-
-    @property
-    def width(self):
-        return self._width
-
-    @property
-    def height(self):
-        return self._height
 
     def mouseMoveEvent(self, event):
         mime_data = QMimeData()
@@ -48,15 +46,14 @@ class GUITile(Tile, QPushButton):
 
 
 class GUITileTrayPosition(GUIPosition):
-    __emptry_tray_position_color = QtGui.QColor(192, 192, 192)
+    _default_tray_position_color = QtGui.QColor(192, 192, 192)
 
-    def __init__(self, parent, controller, geometry, tray_index, color=__emptry_tray_position_color):
-        GUIPosition.__init__(self, parent, controller, geometry, 1, tray_index, color=color)
-        self._tray_index = tray_index
+    def __init__(self, parent, controller, geometry, tray_index, color=_default_tray_position_color):
+        GUIPosition.__init__(self, parent, controller, geometry, x=1, y=tray_index, color=color)
 
     @property
     def index(self):
-        return self._tray_index
+        return self.y
 
 
 class GUITileTray(TileTray):
@@ -79,7 +76,7 @@ class GUITileTray(TileTray):
             temp_positions.append(
                 GUITileTrayPosition(parent=widget, controller=controller, tray_index=i + 1,
                                     geometry=QtCore.QRect((self._pos_width + self._pos_spacing) * i, 0,
-                                                     self._pos_width, self._pos_height)))
+                                                          self._pos_width, self._pos_height)))
         return temp_positions
 
     def show(self):

@@ -260,6 +260,22 @@ class TestTileTray(unittest.TestCase):
         tr.put_back(tile)
         self.assertEqual(original_size, tr.remaining())
 
+    def test_bad_init_non_positive_integer_size(self):
+        self.assertRaises(AssertionError, lambda: TileTray(0))
+
+    def test_bad_init_list_greater_than_size(self):
+        self.assertRaises(AssertionError, lambda: TileTray(2, self.tiles))
+
+    def test_bad_take_not_a_tile_from_tile_tray(self):
+        tr = TileTray(10, self.tiles)
+        self.assertRaises(RuntimeError, lambda: tr.take(Tile('A')))
+
+    def test_bad_put_back_tray_full(self):
+        tr = TileTray(10, self.tiles)
+        while tr.remaining() < tr.size():
+            tr.put_back(Tile('A'))
+        self.assertRaises(RuntimeError, lambda: tr.put_back(Tile('A')))
+
 
 if __name__ == "__main__":
     unittest.main()

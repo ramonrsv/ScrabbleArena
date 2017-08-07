@@ -1,6 +1,7 @@
-from .board_ui import UiBoardPosition
-from .board_ui import UiBoard, UiTileTray
-from .tile import Tile, TileBag
+from lib.gui.board import GUIBoard
+from lib.gui.board import GUIBoardPosition
+from lib.gui.tile import GUITileTray
+from .tile import TileBag
 
 
 class GameController:
@@ -40,15 +41,15 @@ class GameController:
         # TODO: the old object isn't deleted and memory leaks, something preventing garbage collection?
         if self._ui_board:
             self._ui_board.hide()
-        self._ui_board = UiBoard(self._main_board_widget, self._x_label_widget, self._y_label_widget,
-                                 self._board_configuration, self)
+        self._ui_board = GUIBoard(self._main_board_widget, self._x_label_widget, self._y_label_widget,
+                                  self._board_configuration, self)
 
     def _create_new_player_tray(self, player_ui_tray_widget, old_tray):
         # TODO: the old object isn't deleted and memory leaks, something preventing garbage collection?
         if old_tray:
             old_tray.hide()
-        return UiTileTray(player_ui_tray_widget,
-                          self._tile_bag.take_multiple(self._tray_size), self._tray_size, self)
+        return GUITileTray(player_ui_tray_widget,
+                           self._tile_bag.take_multiple(self._tray_size), self._tray_size, self)
 
     def show(self):
         for obj in [self._ui_board, self._player1_ui_tray, self._player2_ui_tray]:
@@ -78,7 +79,7 @@ class GameController:
         pos_to.set_tile(tile)
         pos_to.tile.show()
 
-        print("drop event on " + (str(pos_to.coo) if isinstance(pos_to, UiBoardPosition) else str(pos_to.index)))
+        print("drop event on " + (str(pos_to.coo) if isinstance(pos_to, GUIBoardPosition) else str(pos_to.index)))
         print("Tile: " + str(tile))
         print("From: " + str(pos_from))
         print("To: " + str(pos_to))

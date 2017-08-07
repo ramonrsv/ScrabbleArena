@@ -3,8 +3,8 @@ import string
 
 class Dimension:
     def __init__(self, width, height):
-        self.__width = width  # Not required in __init__, but here to follow PEP
-        self.__height = height
+        self._width = width  # Not required in __init__, but here to follow PEP
+        self._height = height
         self.width = width
         self.height = height
 
@@ -16,19 +16,19 @@ class Dimension:
 
     @property
     def width(self):
-        return self.__width
+        return self._width
 
     @property
     def height(self):
-        return self.__height
+        return self._height
 
     @width.setter
     def width(self, w):
-        self.__width = self._dimension_check(w)
+        self._width = self._dimension_check(w)
 
     @height.setter
     def height(self, h):
-        self.__height = self._dimension_check(h)
+        self._height = self._dimension_check(h)
 
     @staticmethod
     def center_coo(width, height):
@@ -42,8 +42,8 @@ class Dimension:
 
 class Coordinate:
     def __init__(self, x, y):
-        self.__x = x  # Not required, but here to follow PEP
-        self.__y = y
+        self._x = x  # Not required, but here to follow PEP
+        self._y = y
         self.x = x
         self.y = y
 
@@ -69,7 +69,7 @@ class Coordinate:
 
     @property
     def x(self):
-        return self.__x
+        return self._x
 
     @property
     def x_alpha(self):
@@ -82,7 +82,7 @@ class Coordinate:
         else:
             if not isinstance(x, int) or x <= 0:
                 raise TypeError("invalid value: '" + str(x) + "' - is not a positive integer")
-            self.__x = x
+            self._x = x
 
     @x_alpha.setter
     def x_alpha(self, xa):
@@ -93,13 +93,13 @@ class Coordinate:
 
     @property
     def y(self):
-        return self.__y
+        return self._y
 
     @y.setter
     def y(self, y):
         if not isinstance(y, int) or y <= 0:
             raise TypeError("invalid value: '" + str(y) + "' - is not a positive integer")
-        self.__y = y
+        self._y = y
 
     @property
     def coo(self):

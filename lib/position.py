@@ -84,41 +84,44 @@ class ClassicPositionAttribute(PositionAttribute):
 class Position(Coordinate):
     def __init__(self, x, y, pos_attribute=ClassicPositionAttribute.normal):
         Coordinate.__init__(self, x, y)
-        self.__attribute = pos_attribute
+        self._attribute = pos_attribute
         self.attribute = pos_attribute
-        self.__tile = None
+        self._tile = None
 
     @property
     def attribute(self):
-        return self.__attribute
+        return self._attribute
 
     @attribute.setter
     def attribute(self, pos_attribute):
         if not isinstance(pos_attribute, PositionAttribute):
             raise TypeError("invalid type: " + str(type(pos_attribute)) + " - is not " + str(type(PositionAttribute)))
-        self.__attribute = pos_attribute
-
-    @property
-    def tile(self):
-        if not self.has_tile():
-            raise RuntimeError("position does not currently have a tile")
-        return self.__tile
-
-    @tile.setter
-    def tile(self, tile):
-        if not isinstance(tile, Tile):
-            raise TypeError("tile has to be a Tile object")
-        if self.__tile:
-            raise RuntimeError("position already has a tile object")
-        self.__tile = tile
+        self._attribute = pos_attribute
 
     def has_tile(self):
-        return True if self.__tile is not None else False
+        return True if self._tile is not None else False
+
+    def get_tile(self):
+        if not self.has_tile():
+            raise RuntimeError("position does not currently have a tile")
+        return self._tile
 
     def set_tile(self, tile):
-        self.tile = tile
+        if not isinstance(tile, Tile):
+            raise TypeError("tile has to be a Tile object")
+        if self._tile is not None:
+            raise RuntimeError("position already has a tile object")
+        self._tile = tile
 
     def remove_tile(self):
         if not self.has_tile():
             raise RuntimeError("position does not currently have a tile")
-        self.__tile = None
+        self._tile = None
+
+    @property
+    def tile(self):
+        return self.get_tile()
+
+    @tile.setter
+    def tile(self, tile):
+        self.set_tile(tile)

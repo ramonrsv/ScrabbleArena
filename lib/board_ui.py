@@ -2,7 +2,7 @@ from PyQt5 import QtCore, QtGui
 from PyQt5.QtWidgets import QWidget, QLabel, QPushButton
 from PyQt5.QtCore import QMimeData, Qt
 from PyQt5.QtGui import QDrag
-from .position import ClassicPositionAttribute as PosAttribute
+from .position import Position, ClassicPositionAttribute as PosAttribute
 from .gameplay import GameplayPosition, GameplayBoard, TileTray
 from .tile_bag import Tile
 
@@ -47,17 +47,17 @@ class UiTile(Tile, QPushButton):
         drag.exec_(Qt.MoveAction)
 
 
-class UiBasicPosition(QWidget):
+class UiBasicPosition(GameplayPosition, QWidget):
     __default_color = QtGui.QColor(192, 192, 192)
 
-    def __init__(self, parent, controller, geometry, color=__default_color):
+    def __init__(self, parent, controller, geometry, x, y, pos_attribute=PosAttribute.normal, color=__default_color):
+        GameplayPosition.__init__(self, x, y, pos_attribute)
         QWidget.__init__(self, parent)
         self.setAcceptDrops(True)  # Allow drag and drop
         self.controller = controller  # Allow callbacks to controller object on drag and drop
         self.geometry = geometry
         self.setGeometry(self.geometry)
         self._color = color
-        self._tile = None  # To hold tile object placed in this position
         self._set_display_properties()
 
     def _set_display_properties(self):
@@ -65,32 +65,6 @@ class UiBasicPosition(QWidget):
         p = self.palette()
         p.setColor(self.backgroundRole(), self._color)
         self.setPalette(p)
-
-    @property
-    def tile(self):
-        return self._tile
-
-    @tile.setter
-    def tile(self, tile):
-        if not isinstance(tile, UiTile):
-            raise TypeError("tile has to be a UiTile object")
-        if self._tile:
-            raise RuntimeError("position already has a tile object")
-        self._tile = tile
-        self.tile.setParent(self)
-        self.tile.move(self.rect().center() - self.tile.rect().center())  # Center tile in space
-        self.tile.parent = self  # Parent UiPosition used for determining 'from' in move events
-
-    def has_tile(self):
-        return True if self.tile else False
-
-    def set_tile(self, tile):
-        self.tile = tile
-
-    def remove_tile(self):
-        if not self.tile:
-            raise RuntimeError("position does not currently have a tile")
-        self._tile = None
 
     def dragEnterEvent(self, event):
         self.controller.handle_drag_enter_event(event, self)
@@ -108,12 +82,18 @@ class UiBasicPosition(QWidget):
         if self.has_tile():
             self.tile.hide()
 
+    def set_tile(self, tile):
+        GameplayPosition.set_tile(self, tile)
+        self.tile.setParent(self)
+        self.tile.move(self.rect().center() - self.tile.rect().center())  # Center tile in space
+        self.tile.parent = self  # Parent UiPosition used for determining 'from' in move events
+
 
 class UiTrayPosition(UiBasicPosition):
     __emptry_tray_position_color = QtGui.QColor(192, 192, 192)
 
     def __init__(self, parent, controller, geometry, tray_index, color=__emptry_tray_position_color):
-        UiBasicPosition.__init__(self, parent, controller, geometry, color)
+        UiBasicPosition.__init__(self, parent, controller, geometry, 1, tray_index, color=color)
         self._tray_index = tray_index
 
     @property
@@ -121,7 +101,7 @@ class UiTrayPosition(UiBasicPosition):
         return self._tray_index
 
 
-class UiBoardPosition(GameplayPosition, UiBasicPosition):
+class UiBoardPosition(UiBasicPosition):
     __pos_type_color = {
         PosAttribute.normal: QtGui.QColor(192, 192, 192),
         PosAttribute.CENTER: QtGui.QColor(81, 0, 102),
@@ -131,8 +111,8 @@ class UiBoardPosition(GameplayPosition, UiBasicPosition):
         PosAttribute.W3: QtGui.QColor(255, 128, 0)}
 
     def __init__(self, parent, controller, geometry, x, y, pos_attribute=PosAttribute.normal):
-        GameplayPosition.__init__(self, x, y, pos_attribute)
-        UiBasicPosition.__init__(self, parent, controller, geometry, self.__pos_type_color[self.attribute])
+        UiBasicPosition.__init__(self, parent, controller, geometry, x, y,
+                                 pos_attribute, self.__pos_type_color[pos_attribute])
 
 
 class UiTileTray(TileTray):

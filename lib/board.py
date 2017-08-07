@@ -7,8 +7,6 @@ class Board(Dimension):
         Dimension.__init__(self, board_configuration.width, board_configuration.height)
         self._config = board_configuration
         self._positions = self._make_all_positions_dict(board_configuration)
-        self._coo_list = list(self._positions.keys())
-        self._coo_list.sort()
 
     def _factory_make_position(self, position):
         return Position(position.x, position.y, position.attribute)
@@ -26,23 +24,22 @@ class Board(Dimension):
 
     def positions(self):
         """Iterate over all positions"""
-        for coo in self._coo_list:
-            yield self._positions[coo]
+        for _, pos in self._positions.items():
+            yield pos
 
     def get_position(self, coo):
-        """Retrieve a position from a coordinate tuple (x,y)"""
-        return self._positions.get(Coordinate(coo[0], coo[1]).coo, None)  # Accept ('A',1) form, helped by Position
+        """Retrieve a position from a coordinate tuple (x,y). Also accept ('A',1) form, helped by Coordinate"""
+        return self._positions.get(Coordinate(coo[0], coo[1]).coo, None)
 
 
 class BoardConfiguration(Dimension):
     def __init__(self, width, height, special_positions=None):
         Dimension.__init__(self, width, height)
-        self.__special_positions = []
-        self.special_positions = special_positions if special_positions else []
+        self._special_positions = special_positions if special_positions else []
 
     @property
     def special_positions(self):
-        return self.__special_positions
+        return self._special_positions
 
     @special_positions.setter
     def special_positions(self, special_positions):
@@ -57,10 +54,7 @@ class BoardConfiguration(Dimension):
             if pos.x > self.width or pos.y > self.height:
                 raise ValueError("out of bounds position: " + str(pos.coo) +
                                  " - " + str(self.width, self.height) + " dimensions")
-        self.__special_positions = special_positions
-
-    def set_special_positions(self, special_positions):
-        self.special_positions = special_positions
+        self._special_positions = special_positions
 
     @staticmethod
     def _mirror_position(pos, direction, width, height):

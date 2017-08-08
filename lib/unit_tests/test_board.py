@@ -1,5 +1,5 @@
 import unittest
-from lib.game_types.board_configurations import Words_with_friends_board_configuration
+from lib.game_settings.board_configurations import Words_with_friends_board_configuration
 from lib.position import Position, ClassicPositionAttribute
 from lib.board import Board, BoardConfiguration
 

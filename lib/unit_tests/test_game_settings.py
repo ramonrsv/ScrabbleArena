@@ -1,8 +1,8 @@
 import unittest
 import string
 from lib.letter_value_map import LetterValueMap
-from lib.game_types.letter_value_maps import English_classic_lvm
-from lib.game_types.tile_bag_distributions import English_classic_100_tbd
+from lib.game_settings.letter_value_maps import English_classic_lvm
+from lib.game_settings.tile_bag_distributions import English_classic_100_tbd
 
 
 class TestLetterValueMaps(unittest.TestCase):

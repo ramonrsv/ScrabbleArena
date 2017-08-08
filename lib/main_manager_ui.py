@@ -1,6 +1,6 @@
-from .game_types.board_configurations import \
+from .game_settings.board_configurations import \
     Words_with_friends_board_configuration, Words_with_friends_fast_play_board_configuration
-from .game_types.tile_bag_distributions import English_classic_100_tbd
+from .game_settings.tile_bag_distributions import English_classic_100_tbd
 from .game_controller import GameController
 
 

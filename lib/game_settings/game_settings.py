@@ -13,6 +13,8 @@ class GameSettings:
             "board_configuration must be BoardConfiguration type"
         assert isinstance(player_tray_size, int) and player_tray_size > 0, \
             "player_tray_size must be a positive integer"
+        assert letter_value_map.all_letters() == tile_bag_distribution.all_letters(), \
+            "tile_bad_distribution must have been initialized with letter_value_map - they must have the same letters"
 
         self._letter_value_map = letter_value_map
         self._tile_bag_distribution = tile_bag_distribution
